@@ -1,0 +1,3586 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<doc>
+    <assembly>
+        <name>FChoice.Common</name>
+    </assembly>
+    <members>
+        <member name="N:FChoice.Common">
+            <summary>The FChoice.Common namespace provides
+configuration, logging, and error management services to First
+Choice .NET-based products.</summary>
+            <remarks>The FChoice.Common namespace is largely intended to be used
+by First Choice .NET products only. While public for your
+convenience, usage of any of these classes directly (except for
+Configuration or Logging) is discouraged.</remarks>
+        </member>
+        <member name="T:FChoice.Common.IErrorMessageProvider">
+            <summary>The IErrorMessageProvider is the interface used by
+FCExceptionBase to allow other assemblies to provide custom error
+message resolution.</summary>
+            <remarks>You can implement your own error message provider to load
+error message resources from other sources. If you implement this
+interface and wish to use it, simply call the SetMessageProvider
+static (Shared in Visual Basic) method on the
+FCExceptionBase class.</remarks>
+        </member>
+        <member name="M:FChoice.Common.IErrorMessageProvider.GetMessageFormat(System.String)">
+            <summary>Called by FCExceptionBase Class when a specific error message
+string resource is required.</summary>
+            <returns>The value of the string resource for this message ID and
+current culture.</returns>
+            <remarks>    If you wish to provide internationalized culture-specific
+    error messages, use the
+    
+    CultureInfo.CurrentCulture property to determine which
+    culture's resource to return.
+    NOTE: If a message string cannot be
+    loaded for this message ID, simple return null
+    (Nothing in Visual Basic) and an attempt will
+    be made by
+    FCExceptionBase
+    to load a default string in the default culture (en-US).</remarks>
+            <param name="messageId">The message ID whose string value to load.</param>
+        </member>
+        <member name="T:FChoice.Common.DataProtectionStore">
+            <summary>DataProtectionStore is used with the DataProtector when
+encrypting or decrypting data. DataProtectionStore tells the
+DataProtector which key store to use.</summary>
+        </member>
+        <member name="F:FChoice.Common.DataProtectionStore.UseMachineStore">
+            <summary>Specifies that the DataProtector should use the machine key
+store. This means that data encrypted with this key can be
+decrypted by any user on this machine. The key will not work on any
+other computer.</summary>
+        </member>
+        <member name="F:FChoice.Common.DataProtectionStore.UseUserStore">
+            <summary>Specifies that the DataProtector should use the user key
+store. This means that data encrypted with this key can be
+decrypted by ONLY this user and ONLY on this computer.</summary>
+        </member>
+        <member name="T:FChoice.Common.FCLicenseException+LoadFailReasons">
+            <summary>LoadFailReasons is used by FCLicenseException to provide a
+specific reason why license procurement failed for the
+product.</summary>
+            <remarks>If you encounter an FCLicenseException during operation of a
+First Choice product, please contact First Choice support
+immediately at
+support@fchoice.com.</remarks>
+        </member>
+        <member name="F:FChoice.Common.FCLicenseException+LoadFailReasons.InvalidUserLimit">
+            <summary>The license requested is invalid because its user limit value
+is not within the acceptable range.</summary>
+        </member>
+        <member name="F:FChoice.Common.FCLicenseException+LoadFailReasons.InvalidGraceLimit">
+            <summary>The license requested is invalid because its grace period is
+not within an acceptable range.</summary>
+        </member>
+        <member name="F:FChoice.Common.FCLicenseException+LoadFailReasons.InvalidLicenseDate">
+            <summary>The license requested is invalid because its expiration date
+is not within an acceptable range.</summary>
+        </member>
+        <member name="F:FChoice.Common.FCLicenseException+LoadFailReasons.MissingSiteId">
+            <summary>The license requested does not contain a valid site
+ID.</summary>
+        </member>
+        <member name="F:FChoice.Common.FCLicenseException+LoadFailReasons.MissingTables">
+            <summary>The license tables required by First Choice Licensing are not
+installed in the database.</summary>
+        </member>
+        <member name="F:FChoice.Common.FCLicenseException+LoadFailReasons.GeneralError">
+            <summary>An unknown error has occurred while retrieving</summary>
+        </member>
+        <member name="T:FChoice.Common.LogLevel">
+            <summary>LogLevel is an enumeration of supported logging levels. This
+is used in conjunction with LogManager and Logger to control how
+log messages are filtered or written to the output appender.</summary>
+        </member>
+        <member name="F:FChoice.Common.LogLevel.DEBUG">
+            <summary>The DEBUG level symbolizes the most detailed and exhaustive
+level. This should only be used for troubleshooting or debugging
+information not necessary during normal operation or even basic
+troubleshooting.</summary>
+        </member>
+        <member name="F:FChoice.Common.LogLevel.INFO">
+            <summary>The INFO level symbolizes normal logging that details major
+events in the systems and perhaps some informational or status
+messages that might be useful to a systems administrator monitoring
+the system or troubleshooting a basic problem.</summary>
+        </member>
+        <member name="F:FChoice.Common.LogLevel.WARN">
+            <summary>The WARN level symbolizes events in the system that systems
+administrators and developers should be aware of and should
+probably be fixed soon.</summary>
+        </member>
+        <member name="F:FChoice.Common.LogLevel.ERROR">
+            <summary>The ERROR level symbolizes events in the system from which
+the application cannot continue processing the current task (note
+that this doesn't necessarily mean the application will crash). The
+system could be in a potentially dangerous state and steps should
+be taken to immediately resolve the problem.</summary>
+        </member>
+        <member name="F:FChoice.Common.LogLevel.FATAL">
+            <summary>The FATAL level symbolizes an unrecoverable error that is
+causing the application to cease execution to prevent data loss or
+corruption. FATAL messages should be resolved immediately and are
+of the highest importance.</summary>
+        </member>
+        <member name="F:FChoice.Common.LogLevel.UNDEFINED">
+            <summary>This level is provided only for compatibility and is not
+used.</summary>
+        </member>
+        <member name="T:FChoice.Common.CommonException">
+            <summary>CommonException is the exception class used throughout the
+FChoice.Common and FChoice.Common.Data namespaces. It provides
+localized error messages with unique error identifiers.</summary>
+            <remarks>This exception is thrown whenever the FChoice.Common classes
+encounter problems. They should generally be rare and are usually
+related to invalid configuration settings or some type of major
+error from which .NET or First Choice products cannot
+recover.</remarks>
+        </member>
+        <member name="M:FChoice.Common.CommonException.Assert(System.Int32,System.Boolean,System.String)">
+            <summary>Assert it used internally by First Choice products to ensure
+that internal state and data is consistent with expected
+norms.</summary>
+            <remarks>Note that the reason parameter is
+not localized. Assertions are generally internal state monitors
+used by programmers and are not intended to be viewed by end users.
+The reason should be encoded in the language of the developer to
+aid in troubleshooting.</remarks>
+            <param name="errorId">The unique error ID of the exception that will be thrown if
+the assertion fails.</param>
+            <param name="assertionResult">A boolean which is the result of an assertion. If false, a
+CommonException will be thrown using the
+errorId specified.</param>
+            <param name="reason">A description of what the assertion represents and why it is
+important.</param>
+        </member>
+        <member name="T:FChoice.Common.ConfigValues">
+            <summary>ConfigValues is a collection of string constants used for
+strongly-typing the keys used to access the common configuration
+items in the FCConfiguration collection.</summary>
+            <remarks>ConfigValues is used similar to .NET enumeration type.</remarks>
+        </member>
+        <member name="F:FChoice.Common.ConfigValues.CONNECT_STRING">
+            <summary>The key to the FCConfiguration collection which contains the
+configured database connection string.</summary>
+        </member>
+        <member name="F:FChoice.Common.ConfigValues.DB_TYPE">
+            <summary>The key to the FCConfiguration collection which contains the
+configured database provider type.</summary>
+        </member>
+        <member name="F:FChoice.Common.ConfigValues.ENABLE_BATCH">
+            <summary>The key to the FCConfiguration collection which contains the
+configured switch for enabling or disabling database query
+batching.</summary>
+            <remarks>Note that the value returned from the FCConfiguration
+collection using this key will override whatever the default
+setting of the database provider is. However, if the database
+provider does not support batching (e.g. Oracle), setting this
+value will not affect batching behavior.</remarks>
+        </member>
+        <member name="F:FChoice.Common.ConfigValues.NO_CACHE_FILE">
+            <summary>The key to the FCConfiguration collection which contains the
+configured switch which controls whether First Choice applications
+will cache application data.</summary>
+        </member>
+        <member name="T:FChoice.Common.DataProtector">
+            <summary>Provides easy access to the Windows Data Protection API
+(DPAPI) for encrypting and decrypting data values</summary>
+            <remarks>    
+    
+     WARNING: The encryption
+    produced by this class is only usable from the machine on which
+    the encryption occurred. The encrypted text cannot be used by a
+    different computer.
+    For more information on Windows Data Protection, please
+    see this technical article on MSDN called
+    
+    Windows Data Protection.</remarks>
+        </member>
+        <member name="M:FChoice.Common.DataProtector.Decrypt">
+            <summary>Decrypts a byte array of data, with optional entropy, into a
+new byte array of unencrypted data</summary>
+            <returns>An array of bytes containing the unencrypted data</returns>
+            <remarks>
+ WARNING: The encryption
+produced by this class is only usable from the machine on which the
+encryption occurred. The encrypted text cannot be used by a
+different computer.</remarks>
+        </member>
+        <member name="M:FChoice.Common.DataProtector.Decrypt(FChoice.Common.DataProtectionStore,System.Byte[])">
+            <summary>Decrypts a byte array of data into a new byte array of
+unencrypted data</summary>
+            <remarks>
+ WARNING: The encryption
+produced by this class is only usable from the machine on which the
+encryption occurred. The encrypted text cannot be used by a
+different computer.</remarks>
+            <param name="keyStore">Specifies which key store to use (User or Machine)</param>
+            <param name="cipherBytes">The encrypted bytes to decrypt</param>
+        </member>
+        <member name="M:FChoice.Common.DataProtector.Decrypt(FChoice.Common.DataProtectionStore,System.Byte[],System.Byte[])">
+            <summary>Decrypts a byte array of data, using the specified entropy,
+into a new byte array of unencrypted data</summary>
+            <remarks>
+ WARNING: The encryption
+produced by this class is only usable from the machine on which the
+encryption occurred. The encrypted text cannot be used by a
+different computer.</remarks>
+            <param name="keyStore">Specifies which key store to use (User or Machine)</param>
+            <param name="cipherBytes">The encrypted bytes to decrypt</param>
+            <param name="entropy">The entropy, or "password" to use to decrypt this data. The
+value must be the same as was used to originally encrypt the
+data</param>
+        </member>
+        <member name="M:FChoice.Common.DataProtector.DecryptString">
+            <summary>Decrypts, using optional entropy, data which was encoded into
+a string using the Base64 encoding scheme</summary>
+            <remarks>
+ WARNING: The encryption
+produced by this class is only usable from the machine on which the
+encryption occurred. The encrypted text cannot be used by a
+different computer.</remarks>
+        </member>
+        <member name="M:FChoice.Common.DataProtector.DecryptString(FChoice.Common.DataProtectionStore,System.String)">
+            <summary>Decrypts data which was encoded into a string using the
+Base64 encoding scheme</summary>
+            <remarks>    This method expects the payload to be a byte array which
+    contains the UTF8-encoded bytes of a string that was encrypted
+    using the
+    
+    EncryptString Method.
+    
+    
+     WARNING: The
+    encryption produced by this class is only usable from the
+    machine on which the encryption occurred. The encrypted text
+    cannot be used by a different computer.</remarks>
+            <returns>The decrypted contents of this message as a string</returns>
+            <param name="keyStore">Specifies which key store to use (User or Machine)</param>
+            <param name="encryptedText">A Base64 encoded string representing the encrypted bytes to
+decrypt</param>
+        </member>
+        <member name="M:FChoice.Common.DataProtector.DecryptString(FChoice.Common.DataProtectionStore,System.String,System.String)">
+            <summary>Decrypts, using the specified entropy, data which was encoded
+into a string using the Base64 encoding scheme</summary>
+            <remarks>    This method expects the payload to be a byte array which
+    contains the UTF8-encoded bytes of a string that was encrypted
+    using the
+    
+    EncryptString Method.
+    
+    
+     WARNING: The
+    encryption produced by this class is only usable from the
+    machine on which the encryption occurred. The encrypted text
+    cannot be used by a different computer.</remarks>
+            <returns>The decrypted contents of this message as a string</returns>
+            <param name="keyStore">Specifies which key store to use (User or Machine)</param>
+            <param name="encryptedText">A Base64 encoded string representing the encrypted bytes to
+decrypt</param>
+            <param name="entropy">The entropy, or "password" to use to decrypt this data. The
+value must be the same as was used to originally encrypt the
+data</param>
+        </member>
+        <member name="M:FChoice.Common.DataProtector.Encrypt">
+            <summary>Encrypts a byte array using optional entropy</summary>
+            <remarks>
+ WARNING: The encryption
+produced by this class is only usable from the machine on which the
+encryption occurred. The encrypted text cannot be used by a
+different computer.</remarks>
+        </member>
+        <member name="M:FChoice.Common.DataProtector.Encrypt(FChoice.Common.DataProtectionStore,System.Byte[])">
+            <summary>Encrypts a byte array</summary>
+            <remarks>
+ WARNING: The encryption
+produced by this class is only usable from the machine on which the
+encryption occurred. The encrypted text cannot be used by a
+different computer.</remarks>
+            <returns>A byte array representing the encrypted version of the
+original plainBytes payload</returns>
+            <param name="keyStore">Specifies which key store to use (User or Machine)</param>
+            <param name="plainBytes">The plain, or unencrypted, bytes to encrypt</param>
+        </member>
+        <member name="M:FChoice.Common.DataProtector.Encrypt(FChoice.Common.DataProtectionStore,System.Byte[],System.Byte[])">
+            <summary>Encrypts a byte array using the specified entropy</summary>
+            <remarks>    It is important not to lose the entropy used to encrypt
+    this data. If the entropy is lost, the data cannot be
+    decrypted. If the entropy must be stored, do not store it with
+    the encrypted payload.
+    
+    
+     WARNING: The
+    encryption produced by this class is only usable from the
+    machine on which the encryption occurred. The encrypted text
+    cannot be used by a different computer.</remarks>
+            <returns>A byte array representing the encrypted version of the
+original plainBytes payload</returns>
+            <param name="keyStore">Specifies which key store to use (User or Machine)</param>
+            <param name="plainBytes">The plain, or unencrypted, bytes to encrypt</param>
+            <param name="entropy">The entropy, or "password" to use to encryptthis data. The
+value must be used to decrypt the data.</param>
+        </member>
+        <member name="M:FChoice.Common.DataProtector.EncryptString">
+            <summary>Encrypts a string, using optional entropy, and returns a
+Base64-encoded string representing the encrypted output</summary>
+            <remarks>
+ WARNING: The encryption
+produced by this class is only usable from the machine on which the
+encryption occurred. The encrypted text cannot be used by a
+different computer.</remarks>
+        </member>
+        <member name="M:FChoice.Common.DataProtector.EncryptString(FChoice.Common.DataProtectionStore,System.String)">
+            <summary>Encrypts a string and returns a Base64-encoded string
+representing the encrypted output</summary>
+            <remarks>
+ WARNING: The encryption
+produced by this class is only usable from the machine on which the
+encryption occurred. The encrypted text cannot be used by a
+different computer.</remarks>
+            <param name="keyStore">Specifies which key store to use (User or Machine)</param>
+            <param name="plainText">A string of text to encrypt</param>
+        </member>
+        <member name="M:FChoice.Common.DataProtector.EncryptString(FChoice.Common.DataProtectionStore,System.String,System.String)">
+            <summary>Encrypts a string, using the specified entropy, and returns a
+Base64-encoded string representing the encrypted output</summary>
+            <remarks>    It is important not to lose the entropy used to encrypt
+    this data. If the entropy is lost, the data cannot be
+    decrypted. If the entropy must be stored, do not store it with
+    the encrypted payload.
+    
+    
+     WARNING: The
+    encryption produced by this class is only usable from the
+    machine on which the encryption occurred. The encrypted text
+    cannot be used by a different computer.</remarks>
+            <param name="keyStore">Specifies which key store to use (User or Machine)</param>
+            <param name="plainText">A string of text to encrypt</param>
+            <param name="entropy">The entropy, or "password" to use to decrypt this data. The
+value must be the same as was used to originally encrypt the
+data</param>
+        </member>
+        <member name="T:FChoice.Common.FCArgumentException">
+            <summary>FCArgumentException is used to signify that parameters passed
+into APIs are invalid. It has several static
+(Shared in Visual Basic) methods that make
+handling required parameters easier.</summary>
+            <remarks>Please see the three main static (Shared in
+Visual Basic) on this class for information on how to help protect
+your APIs against invalid input data: CheckIndexBounds,
+CheckIsEmpty, CheckIsNull.</remarks>
+        </member>
+        <member name="M:FChoice.Common.FCArgumentException.CheckIndexBounds(System.Int32,System.String,System.Int32,System.Int32)">
+            <summary>Used to verify that an indexer property get on a collection
+object contains an index that is within the bounds of
+collection.</summary>
+            <remarks>Index is expected to be a zero-based index value into the
+collection. If index is greater than or equal to maxBound, an
+FCArgumentException will be thrown using the error ID
+supplied.</remarks>
+            <param name="errorId">The unique error ID to use if an exception needs to be
+thrown.</param>
+            <param name="paramName">The name of the parameter that contains the index value to
+check.</param>
+            <param name="index">The actual index value to verify.</param>
+            <param name="maxBound">The current total of elements in the collection against which
+to verify the index value.</param>
+        </member>
+        <member name="M:FChoice.Common.FCArgumentException.CheckIsEmpty(System.Int32,System.String,System.String)">
+            <summary>Checks whether or not the supplied string value is null
+(Nothing in Visual Basic) or empty (trimmed length
+equals zero).</summary>
+            <remarks>If the val parameter is null
+(Nothing in Visual Basic) or empty (trimmed length
+equals zero) an FCArgumentException will be thrown using the
+supplied errorId.</remarks>
+            <param name="errorId">The unique error ID to use if an exception needs to be
+thrown.</param>
+            <param name="paramName">The name of the parameter that contains the index value to
+check.</param>
+            <param name="val">The value of the string parameter to verify.</param>
+        </member>
+        <member name="M:FChoice.Common.FCArgumentException.CheckIsNull(System.Int32,System.String,System.Object)">
+            <summary>Checks to see whether the given parameter is null
+(Nothing in Visual Basic).</summary>
+            <remarks>If val is null
+(Nothing in Visual Basic), and FCArgumentException
+is thrown using the supplied
+errorId.</remarks>
+            <param name="errorId">The unique error ID to use if an exception needs to be
+thrown.</param>
+            <param name="paramName">The name of the parameter that contains the index value to
+check.</param>
+            <param name="val">The value of the parameter to be verified.</param>
+        </member>
+        <member name="T:FChoice.Common.FCConfiguration">
+            <summary>The FCConfiguration class provides access to the application
+configuration and ensures that basic required configuration
+parameters are present.</summary>
+            <remarks>    Values stored in the collection can be modified and new
+    values can be added and removed.
+    NOTE: changing required application
+    configuration values like
+    
+    ConfigValues.CONNECT_STRING may cause the current
+    application to crash.</remarks>
+        </member>
+        <member name="M:FChoice.Common.FCConfiguration.LoadEnvironmentSettings">
+            <summary>Causes FCConfiguration to reload it's current configuration
+values (if forced) or return the current values.</summary>
+            <returns>A
+
+NameValueCollection of values produced by loading the
+environment settings either from the provided collection, from the
+current application configuration, or a merge of both.</returns>
+            <remarks>    This should generally be called once per application by
+    the "Main" method or class which initializes the
+    application.
+    NOTE: It is not advisable to call this
+    method after application initialization has occurred. It could
+    potentially crash the application or cause unusual
+    behavior.</remarks>
+        </member>
+        <member name="M:FChoice.Common.FCConfiguration.LoadEnvironmentSettings">
+            <summary>Retrieves the current configuration values or loads new ones
+if no current ones are available.</summary>
+            <returns>A
+
+NameValueCollection of values produced by loading the
+environment settings either from the provided collection, from the
+current application configuration, or a merge of both.</returns>
+            <remarks>This method will not force a reload of configuration values
+and will check for required parameters</remarks>
+        </member>
+        <member name="M:FChoice.Common.FCConfiguration.LoadEnvironmentSettings(System.Collections.Specialized.NameValueCollection)">
+            <summary>Forces a load of new configuration values, using the supplied
+collection if possible.</summary>
+            <returns>A
+
+NameValueCollection of values produced by loading the
+environment settings either from the provided collection, from the
+current application configuration, or a merge of both.</returns>
+            <remarks>Required parameters will be checked and a FCConfiguration
+will force a reload of settings based on the supplied values when
+this method is called.</remarks>
+            <param name="initialValues">A
+
+NameValueCollection of values with which to attempt a load
+configuration values.</param>
+        </member>
+        <member name="M:FChoice.Common.FCConfiguration.LoadEnvironmentSettings(System.Collections.Specialized.NameValueCollection,System.Boolean,System.Boolean)">
+            <summary>Retrieves the current configuration values or loads new ones
+if no current ones are available, using the specified collection if
+possible.</summary>
+            <returns>A
+
+NameValueCollection of values produced by loading the
+environment settings either from the provided collection, from the
+current application configuration, or a merge of both.</returns>
+            <remarks>If initialValues is null
+(Nothing in Visual Basic), an attempt will be made
+to load the settings from the application configuration settings.
+If the collection is not null, does not contain all the required
+values, and checkRequired is true, an
+exception will be thrown.</remarks>
+            <param name="initialValues">A
+
+NameValueCollection of values with which to attempt a load
+configuration values.</param>
+            <param name="checkRequired">Specifies whether or not to check for quired values in the
+collection (like
+
+ConfigValues.CONNECT_STRING).</param>
+            <param name="forceLoad">Specifies whether or not to retrieve the current
+configuration values (if available), or discard the current and
+load new settings.</param>
+        </member>
+        <member name="M:FChoice.Common.FCConfiguration.ParseFcEnvFile(System.String)">
+            <summary>Provided for legacy compatibility support, this method will
+parse an FC.ENV-style configuration file from the specified file
+path.</summary>
+            <returns>A
+
+NameValueCollection of values read from the file.</returns>
+            <remarks>If you wish to use an FC.ENV-style file to configure your
+application, you can use this file to produce a set of
+configuration values. If you wish to then pass them to
+
+LoadEnvironmentSettings, you must first construct the
+connection string and assign the value with the key
+
+ConfigValues.CONNECT_STRING. To produce a provider-specific
+connection string from a set of values (db_type, db_server,
+db_name, etc), use the
+
+CreateConnectionString method on the current provider:
+
+DbProviderFactory.Provider.</remarks>
+            <param name="filePath">The relative or absolute file system path to the text file
+which contains FCFL(COM) FC.ENV-style contents.</param>
+        </member>
+        <member name="P:FChoice.Common.FCConfiguration.Current">
+            <summary>Gets or sets the current configuration settings or null if
+none are currently configured.</summary>
+            <remarks>If none are loaded, call
+
+LoadEnvironmentSettings to load values.</remarks>
+        </member>
+        <member name="T:FChoice.Common.FCExceptionBase">
+            <summary>FCExceptionBase is the base exception from which all other
+First Choice exception classes derive. It provides pluggable error
+message strings which allows for easy runtime customization and
+localization of error messages.</summary>
+            <remarks>    Notes to implementors:
+    
+        FCExceptionBase will attempt to load default string
+        resources from an embedded resource in your derived class'
+        assembly called "Your.Assembly.Name.ErrorStrings.txt". The
+        format of this file is:
+        
+        MESSAGEID = This would be your
+        error message with {0} replacement variables
+        
+        If you wish to override this behavior and manage the
+        resource loading manually, you can override the
+        GetResourceData() and GetErrorMessageFormat() protected
+        methods.
+        It is recommended that you use unique error numbers
+        every time you throw an exception based on FCExceptionBase.
+        You should choose a range of error numbers and stay
+        consistent in using them.
+        First Choice has reserved error numbers 0 to
+        1,073,741,824 (0x4000000 hex). Customers should use
+        positive numbers above this range. An easy way to assure
+        this is to always OR your error numbers with
+        0x4000000.
+    
+    
+    IMPORTANT: It is important to note that
+    even if you override GetErrorMessageFormat, if a custom message
+    provider is set using
+    
+    SetMessageProvider, the custom message provider will be
+    used before your override of GetErrorMessageFormat. If the
+    custom message provider is unable to load a message,
+    GetErrorMessageFormat will be called next.
+    
+        
+    </remarks>
+        </member>
+        <member name="M:FChoice.Common.FCExceptionBase.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Sets the
+
+SerializationInfo object with the parameter name and additional
+exception information.</summary>
+            <remarks>    GetObjectData sets a
+    
+    SerializationInfo with all the exception object data
+    targeted for serialization. During deserialization, the
+    exception object is reconstituted from the
+    SerializationInfo transmitted over the stream.
+    For more information, see
+    SerializationInfo.</remarks>
+            <param name="info">The object that holds the serialized object data.</param>
+            <param name="context">The contextual information about the source or
+destination.</param>
+        </member>
+        <member name="M:FChoice.Common.FCExceptionBase.SetMessageProvider(FChoice.Common.IErrorMessageProvider)">
+            <summary>Sets the
+IErrorMessageProvider
+that FCExceptionBase will use for loading custom exception error
+message strings for localization or customization.</summary>
+            <remarks>Setting this property will override all error message
+resolution in for all exceptions deriving from this class. Please
+see the documentation for
+IErrorMessageProvider
+on the details of providing custom error messages.</remarks>
+            <param name="provider">An implementation of
+IErrorMessageProvider.</param>
+        </member>
+        <member name="P:FChoice.Common.FCExceptionBase.ErrorCode">
+            <summary>Gets the unique error code for this exception.</summary>
+            <remarks>    Note to implementors:
+    
+        It is recommended that you use unique error
+        numbers every time you throw an exception based on
+        FCExceptionBase. You should choose a range of error numbers
+        and stay consistent in using them.
+        First Choice has reserved error numbers 0 to
+        1,073,741,824 (0x4000000 hex). Customers should use
+        positive numbers above this range. An easy way to assure
+        this is to always OR your error numbers with
+        0x4000000.
+    </remarks>
+        </member>
+        <member name="P:FChoice.Common.FCExceptionBase.ErrorMessageID">
+            <summary>Gets the message identifier for this exception.</summary>
+            <remarks>The error message identifier is used by FCExceptionBase to
+look up actual user-friendly, localized and/or
+implementation-customized messages. This is the key used to look up
+a resource string.</remarks>
+        </member>
+        <member name="P:FChoice.Common.FCExceptionBase.Message">
+            <summary>Gets a message that describes the current exception.</summary>
+            <remarks>FCExceptionBase will first use the custom
+IErrorMessageProvider
+that was set using the
+
+SetMessageProvider method. If no custom message provider is
+specified, FCExceptionBase will then call the protected
+GetErrorMessageFormat method which can be overridden by derived
+classes. This method will, by default, attempt to load a full
+message string from an embedded resource in the current class'
+assembly manifest. If none is present, then FCExceptionBase will
+simply return the
+
+ErrorMessageID.</remarks>
+        </member>
+        <member name="P:FChoice.Common.FCExceptionBase.MessageProvider">
+            <summary>Gets the custom
+IErrorMessageProvider
+if one is specified.</summary>
+        </member>
+        <member name="T:FChoice.Common.FCInvalidConfigurationException">
+            <summary>FCInvalidConfigurationException is used when required
+parameters are missing from the application configuration file, or
+the parameters specified are invalid for some reason.</summary>
+        </member>
+        <member name="T:FChoice.Common.FCLicenseException">
+            <summary>FCLicenseException is used when a licensed product attempts
+to obtain a license key from the installed set of keys and either
+cannot find its key or an error occurs retreiving the list of
+licenses.</summary>
+        </member>
+        <member name="M:FChoice.Common.FCLicenseException.GetLicenseLoadError(System.Exception,System.Int32,FChoice.Common.FCLicenseException+LoadFailReasons)">
+            <summary>This method is intended to be used internally by First Choice
+.NET products.</summary>
+        </member>
+        <member name="M:FChoice.Common.FCLicenseException.GetProductLicenseError(System.Int32,System.Int32)">
+            <summary>This method is intended to be used internally by First Choice
+.NET products.</summary>
+        </member>
+        <member name="T:FChoice.Common.InvalidLoggingConfigException">
+            <summary>FCExceptionBase is the base exception from which all other
+First Choice exception classes derive. It provides pluggable error
+message strings which allows for easy runtime customization and
+localization of error messages.</summary>
+            <remarks>    Notes to implementors:
+    
+        FCExceptionBase will attempt to load default string
+        resources from an embedded resource in your derived class'
+        assembly called "Your.Assembly.Name.ErrorStrings.txt". The
+        format of this file is:
+        
+        MESSAGEID = This would be your
+        error message with {0} replacement variables
+        
+        If you wish to override this behavior and manage the
+        resource loading manually, you can override the
+        GetResourceData() and GetErrorMessageFormat() protected
+        methods.
+        It is recommended that you use unique error numbers
+        every time you throw an exception based on FCExceptionBase.
+        You should choose a range of error numbers and stay
+        consistent in using them.
+        First Choice has reserved error numbers 0 to
+        1,073,741,824 (0x4000000 hex). Customers should use
+        positive numbers above this range. An easy way to assure
+        this is to always OR your error numbers with
+        0x4000000.
+    
+    
+    IMPORTANT: It is important to note that
+    even if you override GetErrorMessageFormat, if a custom message
+    provider is set using
+    
+    SetMessageProvider, the custom message provider will be
+    used before your override of GetErrorMessageFormat. If the
+    custom message provider is unable to load a message,
+    GetErrorMessageFormat will be called next.
+    
+        
+    </remarks>
+        </member>
+        <member name="T:FChoice.Common.Logger">
+            <summary>Logger is used by classes throughout First Choice .NET-based
+products to write logging entries.</summary>
+            <remarks>Use
+LogManager.GetLogger
+to retrieve a specific logger. Once an instance is obtained, use
+the various Log methods to write logging events to configured
+logging appenders.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Logger.Log">
+            <summary>Writes a log entry with the specified level and
+message.</summary>
+            <remarks>It is recommended that you use the individual Log* methods
+rather than this general method. This method is only provided for
+rare circumstances where the log level at which to write a specific
+entry is not known until runtime.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Logger.Log(FChoice.Common.LogLevel,System.Exception,System.String,System.Object[])">
+            <summary>Writes a log entry with the specified level (if logging for
+that level is enabled) with details about an exception that was
+caught.</summary>
+            <remarks>For details of how string formatting works, please see the
+details of the
+
+String.Format method.</remarks>
+            <param name="level">The level at which to write this entry (if
+configured).</param>
+            <param name="ex">The exception that is related to this entry. The details of
+the exception will be written to the configured appender(s).</param>
+            <param name="format">A format string with replacement parameters that will be
+replaced by the args parameters.</param>
+            <param name="args">Arguments to use in replacing variables in the
+format string.</param>
+        </member>
+        <member name="M:FChoice.Common.Logger.Log(FChoice.Common.LogLevel,System.String,System.Object[])">
+            <summary>Writes a log entry with the specified level (if logging for
+that level is enabled).</summary>
+            <remarks>For details of how string formatting works, please see the
+details of the
+
+String.Format method.</remarks>
+            <param name="level">The level at which to write this entry (if
+configured).</param>
+            <param name="format">A format string with replacement parameters that will be
+replaced by the args parameters.</param>
+            <param name="args">Arguments to use in replacing variables in the
+format string.</param>
+        </member>
+        <member name="M:FChoice.Common.Logger.LogDebug">
+            <summary>Writes a DEBUG-level log entry if DEBUG level logging is
+enabled.</summary>
+            <remarks>If the current logger is not configured for DEBUG-level
+logging, these methods will do nothing.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Logger.LogDebug(System.Exception,System.String,System.Object[])">
+            <summary>Writes a DEBUG-level log entry if DEBUG-level logging is
+enabled with details of an exception that was caught.</summary>
+            <remarks>If the current logger is not configured for DEBUG-level
+logging, this method will do nothing.</remarks>
+            <param name="ex">The exception that is related to this entry. The details of
+the exception will be written to the configured appender(s).</param>
+            <param name="format">A format string with replacement parameters that will be
+replaced by the args parameters.</param>
+            <param name="args">Arguments to use in replacing variables in the
+format string.</param>
+        </member>
+        <member name="M:FChoice.Common.Logger.LogDebug(System.String,System.Object[])">
+            <summary>Writes a DEBUG-level log entry if DEBUG-level logging is
+enabled.</summary>
+            <remarks>If the current logger is not configured for DEBUG-level
+logging, this method will do nothing.</remarks>
+            <param name="format">A format string with replacement parameters that will be
+replaced by the args parameters.</param>
+            <param name="args">Arguments to use in replacing variables in the
+format string.</param>
+        </member>
+        <member name="M:FChoice.Common.Logger.LogError">
+            <summary>Writes an ERROR-level log entry if ERROR-level logging is
+enabled.</summary>
+            <remarks>If the current logger is not configured for ERROR-level
+logging or lower, these methods will do nothing.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Logger.LogError(System.Exception,System.String,System.Object[])">
+            <summary>Writes a ERROR-level log entry if ERROR-level logging is
+enabled as well as the details of an exception that was
+caught.</summary>
+            <remarks>If the current logger is not configured for ERROR-level
+logging or lower, this method will do nothing.</remarks>
+            <param name="ex">The exception that is related to this entry. The details of
+the exception will be written to the configured appender(s).</param>
+            <param name="format">A format string with replacement parameters that will be
+replaced by the args parameters.</param>
+            <param name="args">Arguments to use in replacing variables in the
+format string.</param>
+        </member>
+        <member name="M:FChoice.Common.Logger.LogError(System.String,System.Object[])">
+            <summary>Writes a ERROR-level log entry if ERROR-level logging is
+enabled.</summary>
+            <remarks>If the current logger is not configured for ERROR-level
+logging or lower, this method will do nothing.</remarks>
+            <param name="format">A format string with replacement parameters that will be
+replaced by the args parameters.</param>
+            <param name="args">Arguments to use in replacing variables in the
+format string.</param>
+        </member>
+        <member name="M:FChoice.Common.Logger.LogInfo">
+            <summary>Writes an INFO-level log entry if INFO-level logging is
+enabled.</summary>
+            <remarks>If the current logger is not configured for INFO-level
+logging or lower, these methods will do nothing.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Logger.LogInfo(System.Exception,System.String,System.Object[])">
+            <summary>Writes a INFO-level log entry if INFO-level logging is
+enabled as well as the details of an exception that was
+caught.</summary>
+            <remarks>If the current logger is not configured for INFO-level
+logging or lower, this method will do nothing.</remarks>
+            <param name="ex">The exception that is related to this entry. The details of
+the exception will be written to the configured appender(s).</param>
+            <param name="format">A format string with replacement parameters that will be
+replaced by the args parameters.</param>
+            <param name="args">Arguments to use in replacing variables in the
+format string.</param>
+        </member>
+        <member name="M:FChoice.Common.Logger.LogInfo(System.String,System.Object[])">
+            <summary>Writes a INFO-level log entry if INFO-level logging is
+enabled.</summary>
+            <remarks>If the current logger is not configured for INFO-level
+logging or lower, this method will do nothing.</remarks>
+            <param name="format">A format string with replacement parameters that will be
+replaced by the args parameters.</param>
+            <param name="args">Arguments to use in replacing variables in the
+format string.</param>
+        </member>
+        <member name="M:FChoice.Common.Logger.LogWarn">
+            <summary>Writes an WARN-level log entry if WARN-level logging is
+enabled.</summary>
+            <remarks>If the current logger is not configured for WARN-level
+logging or lower, these methods will do nothing.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Logger.LogWarn(System.Exception,System.String,System.Object[])">
+            <summary>Writes a WARN-level log entry if WARN-level logging is
+enabled as well as the details of an exception that was
+caught.</summary>
+            <remarks>If the current logger is not configured for WARN-level
+logging or lower, this method will do nothing.</remarks>
+            <param name="ex">The exception that is related to this entry. The details of
+the exception will be written to the configured appender(s).</param>
+            <param name="format">A format string with replacement parameters that will be
+replaced by the args parameters.</param>
+            <param name="args">Arguments to use in replacing variables in the
+format string.</param>
+        </member>
+        <member name="M:FChoice.Common.Logger.LogWarn(System.String,System.Object[])">
+            <summary>Writes a WARN-level log entry if WARN-level logging is
+enabled.</summary>
+            <remarks>If the current logger is not configured for WARN-level
+logging or lower, this method will do nothing.</remarks>
+            <param name="format">A format string with replacement parameters that will be
+replaced by the args parameters.</param>
+            <param name="args">Arguments to use in replacing variables in the
+format string.</param>
+        </member>
+        <member name="T:FChoice.Common.LogManager">
+            <summary>LogManager provides access to the logging subsystem so that
+classes and write log entries and allow those entries to be
+processed according to the application logging
+configuration.</summary>
+            <remarks>    LogManager provides classes with access to the logging
+    subsystem, as well as some basic ability to programmatically
+    control it's behavior at runtime.
+    NOTE: Changing logging configuration at
+    runtime is an expensive operation and should not be done
+    frequently. The main use case for runtime configuration is
+    occasional changes driven by a human system administrator or
+    developer troubleshooting a problem.</remarks>
+        </member>
+        <member name="M:FChoice.Common.LogManager.AddAppenderToLogger">
+            <summary>Links a logger configuration to an already-prepared
+appender.</summary>
+            <remarks>    This will not clear out any existing appenders that may
+    be configured for that logger, it will merely add it to the
+    list. The only way to clear the appenders for a logger is to
+    call
+    
+    ResetConfiguration and reconfigure all the loggers
+    again.
+    To prepare a rolling file-based appender, see the
+    
+    AddLogFileAppender method.
+    NOTE: After you are finished configuring
+    LogManager, you must call
+    
+    Reconfigure in order for the changes to fully take
+    effect.</remarks>
+        </member>
+        <member name="M:FChoice.Common.LogManager.AddAppenderToLogger(System.String,System.String)">
+            <summary>Links a given appender to the specified logger name.</summary>
+            <remarks>    This will not clear out any existing appenders that may
+    be configured for that logger, it will merely add it to the
+    list. The only way to clear the appenders for a logger is to
+    call
+    
+    ResetConfiguration and reconfigure all the loggers
+    again.
+    To prepare a rolling file-based appender, see the
+    
+    AddLogFileAppender method.NOTE:
+    After you are finished configuring LogManager, you must call
+    
+    Reconfigure in order for the changes to fully take effect.</remarks>
+            <param name="appenderName">The name of an existing appender to associate with this
+logger.</param>
+            <param name="loggerName">The name of the logger that is to start using the
+appender.</param>
+        </member>
+        <member name="M:FChoice.Common.LogManager.AddAppenderToLogger(System.String,System.Type)">
+            <summary>Links a given appender to the specified .NET type-identified
+logger.</summary>
+            <remarks>    This will not clear out any existing appenders that may be
+    configured for that logger, it will merely add it to the list.
+    The only way to clear the appenders for a logger is to call
+    
+    ResetConfiguration and reconfigure all the loggers again. 
+    To prepare a rolling file-based appender, see the
+    
+    AddLogFileAppender method.
+    NOTE: After you are finished configuring
+    LogManager, you must call
+    
+    Reconfigure in order for the changes to fully take
+    effect.</remarks>
+            <param name="appenderName">The name of an existing appender to associate with this
+logger.</param>
+            <param name="typeBeingLogged">The type which represents the name of the logger that is to
+start using the appender.</param>
+        </member>
+        <member name="M:FChoice.Common.LogManager.AddAppenderToRoot(System.String)">
+            <summary>Adds an already-prepared appender to the root level
+(affecting all loggers).</summary>
+            <remarks>    This will not clear out any existing appenders that may
+    be configured for the root, it will merely add it to the list.
+    The only way to clear the appenders for a logger (including the
+    root) is to call
+    
+    ResetConfiguration and reconfigure all the loggers
+    again.
+    To prepare a rolling file-based appender, see the
+    
+    AddLogFileAppender method.
+    NOTE: After you are finished configuring
+    LogManager, you must call
+    
+    Reconfigure in order for the changes to fully take
+    effect.</remarks>
+            <param name="appenderName">The name of an existing appender to associate with this
+logger.</param>
+        </member>
+        <member name="M:FChoice.Common.LogManager.AddLogFileAppender(System.String,System.String)">
+            <summary>Creates a new rolling log file appender and adds it to the
+configuration for use elsewhere.</summary>
+            <remarks>    This will create an initialize the appender. Nothing will
+    be written to the file until this appender is associated with
+    the root logger or any loggers in the hierarchy. See the
+    
+    AddAppenderToRoot and
+    
+    AddAppenderToLogger methods for more information on how to
+    do this association.
+    NOTE: After you are finished configuring
+    LogManager, you must call
+    
+    Reconfigure in order for the changes to fully take
+    effect.</remarks>
+            <param name="appenderName">A unique name to use for this appender for reference
+later.</param>
+            <param name="fileName">The full or relative path to the file to create or use for
+logging. If one exists, it will be appended to.</param>
+        </member>
+        <member name="M:FChoice.Common.LogManager.GetLogger">
+            <summary>Retrieves a logger for the given logger or type name.</summary>
+        </member>
+        <member name="M:FChoice.Common.LogManager.GetLogger(System.String)">
+            <summary>Retrieves a logger for the given logger name.</summary>
+            <returns>The logger configured for the specified logger name.</returns>
+            <remarks>It is generally a good idea to declare a logger once at the
+top of your class as a static member. Though this method does very
+little and has very little impact on performance, it makes the code
+easier to read by having access to the log whenever and wherever
+rather than being forced to retrieve it every time it's
+needed.</remarks>
+            <param name="loggerName">The name of the logger to retrieve.</param>
+        </member>
+        <member name="M:FChoice.Common.LogManager.GetLogger(System.Type)">
+            <summary>Retrieves a logger for the given type name.</summary>
+            <returns>The logger configured for the specified logger type.</returns>
+            <remarks>It is generally a good idea to declare a logger once at the
+top of your class as a static member. Though this method does very
+little and has very little impact on performance, it makes the code
+easier to read by having access to the log whenever and wherever
+rather than being forced to retrieve it every time it's
+needed.</remarks>
+            <param name="loggerType">The type which represents the name of the logger to
+retrieve.</param>
+        </member>
+        <member name="M:FChoice.Common.LogManager.Initialize">
+            <summary>Initializes the LogManager.</summary>
+            <remarks>It is not necessary to call this method as LogManager will
+initialize itself. This method is provided for special
+circumstances where LogManager's initialization must be
+delayed.</remarks>
+        </member>
+        <member name="M:FChoice.Common.LogManager.Reconfigure">
+            <summary>Causes LogManager to flush it's configuration and reload it
+new from the configuration file.</summary>
+            <remarks>It is necessary to call this method after the configuration
+has been changed either outside of the application or using the log
+management methods such as
+
+AddAppenderToLogger,
+
+AddAppenderToRoot, and
+
+AddLogFileAppender.</remarks>
+        </member>
+        <member name="M:FChoice.Common.LogManager.ResetConfiguration">
+            <summary>Resets the log configuration and configuration file back to
+defaults (root level set to INFO with no appenders).</summary>
+            <remarks>WARNING: Call this only if you're sure you
+wish to lose all logging configuration and reset back to
+nothing.</remarks>
+        </member>
+        <member name="M:FChoice.Common.LogManager.SetLoggerLevel">
+            <summary>Changes a specific logger's logging level.</summary>
+            <remarks>    NOTE: After you are finished configuring
+    LogManager, you must call
+    
+    Reconfigure in order for the changes to fully take
+    effect.</remarks>
+        </member>
+        <member name="M:FChoice.Common.LogManager.SetLoggerLevel(System.String,FChoice.Common.LogLevel)">
+            <summary>Changes a specific logger's (specified by name) logging
+level.</summary>
+            <remarks>    NOTE: After you are finished configuring
+    LogManager, you must call
+    
+    Reconfigure in order for the changes to fully take
+    effect.</remarks>
+            <param name="loggerName">The name of the logger whose level is to be set.</param>
+            <param name="level">The level at which the logger should start logging.</param>
+        </member>
+        <member name="M:FChoice.Common.LogManager.SetLoggerLevel(System.Type,FChoice.Common.LogLevel)">
+            <summary>Changes a specific logger's (specified by type) logging
+level.</summary>
+            <remarks>    NOTE: After you are finished configuring
+    LogManager, you must call
+    
+    Reconfigure in order for the changes to fully take
+    effect.</remarks>
+            <param name="loggerType">The type which represents the name of the logger whose level
+is to be set.</param>
+            <param name="level">The level at which the logger should start logging.</param>
+        </member>
+        <member name="M:FChoice.Common.LogManager.SetRootLoggerLevel(FChoice.Common.LogLevel)">
+            <summary>Changes the root's logging level (affecting all
+loggers)</summary>
+            <remarks>    NOTE: After you are finished configuring
+    LogManager, you must call
+    
+    Reconfigure in order for the changes to fully take
+    effect.</remarks>
+            <param name="level">The level at which the root should start logging.</param>
+        </member>
+        <member name="M:FChoice.Common.LogManager.SetThreadContextValue(System.String,System.String)">
+            <summary>Sets a context variable for this thread.</summary>
+            <remarks>    This variable allows you to add contextual information to
+    your log entries (like the session ID or username of the
+    currently logged-in user, etc. This applies only when using
+    manual configuration of LogManager through configuration file.
+    In the &lt;layout&gt; section of an appender, you can add the
+    value of a thread context variable using the following
+    syntax:
+    [X{user} X{session}]
+    
+        You can then set two thread context values for key
+        "user" and key "session" and they will print out in the log
+        file.
+        For more information on configuring LogManager and
+        defining appenders and layouts, please consult the user
+        guide for your application.
+    </remarks>
+            <param name="key">The key or name to use for this variable.</param>
+            <param name="value">The current value to assign to this variable for this
+thread.</param>
+        </member>
+        <member name="P:FChoice.Common.LogManager.Instance">
+            <summary>Gets the singleton instance of LogManager.</summary>
+            <remarks>It is not necessary to do anything with the instance of
+LogManager. This is provided only for internal use in First Choice
+.NET products.</remarks>
+        </member>
+        <member name="P:FChoice.Common.LogManager.IsInitialized">
+            <summary>Gets whether or not LogManager has been properly
+initialized.</summary>
+        </member>
+        <member name="P:FChoice.Common.LogManager.LogConfigFilePath">
+            <summary>Gets or sets the full path to the file LogManager should
+attempt to use to configure itself.</summary>
+            <remarks>Setting this value will not cause LogManager to reconfigure
+itself immediately. You must call
+
+Reconfigure in order for the changes to take effect.</remarks>
+        </member>
+        <member name="F:FChoice.Common.LogManager.SyncRoot">
+            <summary>Gets an object that can be used to synchronize access to
+LogManager.</summary>
+        </member>
+        <member name="T:FChoice.Common.PerfCounterInstaller">
+            <summary>Used by installation utilities to register the proper
+requirements of the performance counters for PerfManager on this
+machine.</summary>
+            <remarks>Please do not call or use this class directly. It is used
+only during installation time and is not intended for direct
+use.</remarks>
+        </member>
+        <member name="T:FChoice.Common.PerfManager">
+            <summary>Provides basic convenience services for instrumenting
+performance counters in an application</summary>
+        </member>
+        <member name="M:FChoice.Common.PerfManager.GetOrCreateCounter(System.String,System.String)">
+            <summary>Retrieves an instance of the specified PerformanceCounter. If
+not present, it will be created and then a new instance will be
+returned.</summary>
+            <returns>A PerformanceCounter instance</returns>
+            <param name="categoryName">The name of the category to which this counter belongs</param>
+            <param name="counterName">The name of the counter in the category</param>
+        </member>
+        <member name="M:FChoice.Common.PerfManager.GetPerfDurationSecs(System.Int64)">
+            <summary>Returns the number of seconds that have elapsed since a
+specified time</summary>
+            <returns>    The number of seconds (or fraction of seconds) that have
+    elapsed since the moment in time represented by the
+    startTicks parameter.
+    See the
+    
+    GetPerfTimer Method for more information on how to obtain a
+    valid tick count value.
+    For more information on instrumenting code to performing
+    timing and performance testing, please see
+    MSKB Article
+    172338 entitled "How to use QueryPerformanceCounter to Time
+    Code."</returns>
+            <param name="startTicks">The number of ticks representing a point in time from which
+this duration started. See the
+
+GetPerfTimer Method for more information on how to obtain a
+valid tick count value</param>
+        </member>
+        <member name="M:FChoice.Common.PerfManager.GetPerfTimer">
+            <summary>Gets the current value of the high-resolution performance
+counter</summary>
+            <returns>A value representing the number of "ticks" since a specific
+time in history. The start time may vary from system to system and
+is only intended to be used from measuring from one recent instant
+in time to another recent instant in time with great accuracy for
+the purpose of timing the duration of operations in code.</returns>
+            <remarks>    This method wraps the Win32 API function
+    
+    QueryPerformanceCounter.
+    For more information on instrumenting code to performing
+    timing and performance testing, please see
+    MSKB Article
+    172338 entitled "How to use QueryPerformanceCounter to Time
+    Code."</remarks>
+        </member>
+        <member name="M:FChoice.Common.PerfManager.Initialize">
+            <summary>Allows PerfManager to initialize itself by creating a new
+PerfMon instance name and preparing all the PerformanceCounter
+instances</summary>
+            <remarks>    This method retrieves configuration from the
+    FCConfiguration
+    Class. The application should ensure that the proper
+    configuration has been loaded (either via configuration file,
+    or through supplied programmatic values) before calling this
+    method.
+    Performance counter events that fire before PerfManager
+    is initialized will be discarded and no error will be
+    thrown.</remarks>
+        </member>
+        <member name="P:FChoice.Common.PerfManager.Instance">
+            <summary>Retreives a reference to the singleton instance of
+PerfManager</summary>
+            <remarks>Most of the methods on PerfManager are instance methods and
+require a reference to a specific instance. There is only one
+singleton instance of PerfManager available. Use this property to
+retrieve a reference to it.</remarks>
+        </member>
+        <member name="P:FChoice.Common.PerfManager.InstanceName">
+            <summary>Gets the instance name for this application as it will appear
+in the PerfMon utility</summary>
+            <remarks>This value can be set in the application configuration by
+specifying the "fchoice.perfmoninstancename" appSetting,
+or by specifying a value in the configuration programmatically
+using
+
+ConfigValues.PERF_INSTANCE_NAME constant as the key
+name.</remarks>
+        </member>
+        <member name="N:FChoice.Common.Data">
+            <summary>The FChoice.Common.Data namespace provides
+data access services to First Choice .NET-based products.</summary>
+        </member>
+        <member name="T:FChoice.Common.Data.IDbExtension">
+            <summary>IDbExtension allows applications to specify database-specific
+extensions to the DbProvider</summary>
+        </member>
+        <member name="M:FChoice.Common.Data.IDbExtension.Initialize(FChoice.Common.Data.DbProvider,System.Xml.XmlNode)">
+            <summary>Initialize is called by the DbProvider when loading
+extensions. This method allows extensions to have a chance to
+perform initialization and start-up tasks.</summary>
+            <param name="provider">The provider this extension is extending</param>
+            <param name="extensionConfig">    The XML configuration specified for this extension in the
+    application configuration file</param>
+        </member>
+        <member name="P:FChoice.Common.Data.IDbExtension.Name">
+            <summary>The name specified in the configuration for this extension.
+This the key by which this extension is identified and referenced
+by the application.</summary>
+        </member>
+        <member name="T:FChoice.Common.Data.DataAccessSectionHandler">
+            <summary>Provides configuration information from the .NET application
+configuration file for the DbProviderFactory to load custom data
+providers.</summary>
+            <remarks>This class is used by &lt;see cref="DbProviderFactory"/&gt;
+and should not be used by other classes. Please consult your
+product documentation on how to configure custom data
+providers.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DataAccessSectionHandler.Create(System.Object,System.Object,System.Xml.XmlNode)">
+            <summary>Creates a new configuration handler and adds it to the
+section handler collection.</summary>
+            <remarks>This method should only be used by the .NET Configuration
+infrastructure. You should not call this method manually.</remarks>
+            <returns>Always null (Nothing in Visual Basic). This
+method initializes
+
+DbProviderFactory with the specified providers.</returns>
+            <param name="parent">The configuration settings in a corresponding parent
+configuration section.</param>
+            <param name="configContext">The virtual path for which the configuration section handler
+computes configuration values. Normally this parameter is reserved
+and is a null reference
+(
+Nothing in Visual Basic).</param>
+            <param name="section">The
+
+System.Xml.XmlNode that contains the configuration information
+to be handled. Provides direct access to the XML contents of the
+configuration section.</param>
+        </member>
+        <member name="T:FChoice.Common.Data.DataParameterCollection">
+            <summary>Contains a collection of
+
+IDbDataParameter objects for use in a database query.</summary>
+            <remarks>    
+        Note that the parameters are keyed in the dictionary by
+        their natural name, but the
+        
+        IDataParameter.ParameterName will contain the
+        database-specific name. For example, a parameter's natural
+        name (i.e. "name") will actually be "@name" in the
+        IDataParameter if the data provider is Microsoft SQL
+        Server, or ":name" for Oracle.
+    
+    
+    
+        This allows implementors to not have to worry about the
+        differences in parameter passing of the underlying database
+        and refer to parameters by their natural, unaltered names.
+    </remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection._ctor">
+            <summary>Creates a new instance of DataParameterCollection with or
+without default settings.</summary>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection._ctor">
+            <summary>Creates an empty new instance of DataParameterCollection
+using the default
+DbProvider
+with a default initial capacity.</summary>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection._ctor(FChoice.Common.Data.DbProvider)">
+            <summary>Creates an empty new instance of DataParameterCollection with
+a default initial capacity based on the specified
+DbProvider.</summary>
+            <param name="accessProvider">The
+DbProvider
+to use instead of the default provider.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection._ctor(System.Data.IDbDataParameter[])">
+            <summary>Creates a new instance of DataParameterCollection using the
+default
+DbProvider
+and populated with an initial array of data parameters.</summary>
+            <param name="parameters">An array of
+
+IDbDataParameter classes which will be used to initially
+populate the new collection.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection._ctor(System.Int32)">
+            <summary>Creates a new instance of DataParameterCollection based on
+the default
+DbProvider
+with the specified initial capacity.</summary>
+            <param name="capacity">The initial capacity for this collection.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.Add">
+            <summary>Adds a parameter to this collection for use as a bind
+variable in the SQL statement.</summary>
+            <remarks>The parameters added to this collection are stored in order
+and are used by
+SqlHelper
+to replace the parameter tokens in the SQL statement in the order
+in which they appear.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.Add(System.String,System.Data.IDbDataParameter)">
+            <summary>Adds a parameter to this collection for passing to the
+database and in replacing parameters in the SQL statement.</summary>
+            <remarks>    The name parameter should be a
+    simple name without any database-specific prefix such as "@"
+    for SQL Server or ":" for Oracle. The SqlHelper will take care
+    of adding the specific prefix.
+    NOTE: The instance of
+    
+    IDbDataParameter to add must match the same underlying type
+    of parameter as that provided by the
+    DbProvider
+    associated with this collection (either the default provider or
+    the one passed into the constructor for this collection). If
+    they do not match, an error will be thrown when the query is
+    executed.</remarks>
+            <param name="name">The name of the parameter to add (without the
+database-specific bind variable prefix such as @ for Microsoft SQL
+Server or : for Oracle)</param>
+            <param name="param">An instance of
+
+IDbDataParameter to add to this collection.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.Add(System.String,System.Object)">
+            <summary>Adds a parameter to this collection for use as a bind
+variable in the SQL statement.</summary>
+            <remarks>    This method will create a new instance of an
+    
+    IDataParameter of the underlying type that matches the data
+    provider specified by the default
+    DbProvider,
+    or the one passed into the constructor. For example, if the
+    data provider is Microsoft SQL Server, this method will add a
+    SqlParameter to the collection.
+    The name parameter should be a
+    simple name without any database-specific prefix such as "@"
+    for SQL Server or ":" for Oracle. The
+    SqlHelper
+    will take care of adding the specific prefix.
+    
+        The rules for the value
+        parameter are dictated by the underlying data provider
+        type. In general, basic types will be supported without
+        problems, but database-specific values such as large binary
+        arrays or text fields might require extra preparation.
+        Consult the database vendor's documentation or the .NET
+        Framework SDK documentation for these special
+        considerations.
+    </remarks>
+            <returns>The index in the collection at which the new parameters was
+added.</returns>
+            <param name="name">The name of the parameter to add (without the
+database-specific bind variable prefix such as @ for Microsoft SQL
+Server or : for Oracle)</param>
+            <param name="value">The value of the parameter that will be passed to the
+database as part of the query</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.Add(System.String,System.Object,System.Data.ParameterDirection)">
+            <summary>Adds a parameter to this collection for passing to the
+database and in replacing parameters in the SQL statement, using a
+specific parameter direction.</summary>
+            <remarks>    This method will create a new instance of an
+    
+    IDataParameter of the underlying type that matches the data
+    provider specified by the default
+    DbProvider,
+    or the one passed into the constructor. For example, if the
+    data provider is Microsoft SQL Server, this method will add a
+    SqlParameter to the collection. 
+    The name parameter should be a
+    simple name without any database-specific prefix such as "@"
+    for SQL Server or ":" for Oracle. The
+    SqlHelper
+    will take care of adding the specific prefix.
+    
+        
+            The rules for the value
+            parameter are dictated by the underlying data provider
+            type. In general, basic types will be supported without
+            problems, but database-specific values such as large
+            binary arrays or text fields might require extra
+            preparation. You can access the parameter collection
+            via the
+            
+            Parameters property to perform database-specific
+            work or add a custom parameter to the collection.
+            Consult the database vendor's documentation or the .NET
+            Framework SDK documentation for these special
+            considerations.
+        
+    </remarks>
+            <returns>The index in the collection at which the new parameters was
+added.</returns>
+            <param name="name">The name of the parameter to add (without the
+database-specific bind variable prefix such as @ for Microsoft SQL
+Server or : for Oracle)</param>
+            <param name="value">The value of the parameter that will be passed to the
+database as part of the query</param>
+            <param name="direction">Specifies a direction for the parameter. By default this is
+
+ParameterDirection.Input.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.Clear">
+            <summary>Removes all parameters from this collection.</summary>
+            <remarks>All parameters will be removed from the collection and the
+   
+Count property will be set to zero.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.Clone">
+            <summary>Creates a new collection using the same parameters.</summary>
+            <remarks>Note that this is not a deep clone. A new collection is
+created with new references pointing to the same underlying
+parameter objects. For a true deep clone (both the collection AND
+the parameters, see the
+
+DeepClone method).</remarks>
+            <returns>A new collection with copies of the references to the same
+parameters.</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.Contains(System.Object)">
+            <summary>Determines whether or not this collection contains the
+specified parameter.</summary>
+            <remarks>If the value specified is not an instance of
+
+IDbDataParameter, or is null (Nothing in
+Visual Basic), it will be ignored and the result will be
+false.</remarks>
+            <returns>Whether or not this collection contains the specified
+parameter.</returns>
+            <param name="value">The
+
+IDbDataParameter to search for.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.CopyTo">
+            <summary>Copies the parameters in this collection to the specified
+array or another DataParameterCollection.</summary>
+            <remarks>The overload that takes a destination DataParameterCollection
+performs a shallow copy. That is, each element is
+
+NOT cloned, but a reference to the same parameter is
+copied into the destination collection.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.CopyTo(System.Array,System.Int32)">
+            <summary>Copies the parameters in this collection to the specified
+array.</summary>
+            <remarks>    The specified array's element type must be compatible
+    with
+    
+    IDbDataParameter.
+    This method uses
+    
+    Array.Copy to copy the elements.
+    
+        The elements are copied to the array in the same
+        order in which they exist in this collection.
+    </remarks>
+            <param name="array">The array to copy the parameters into</param>
+            <param name="index">The index in the array at which to start copying
+parameters</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.CopyTo(FChoice.Common.Data.DataParameterCollection)">
+            <summary>Copies the parameters in this collection to the specified
+collection.</summary>
+            <remarks>This method performs a shallow copy. That is, each element is
+
+NOT cloned, but a reference to the same parameter is
+copied into the destination collection.</remarks>
+            <param name="otherCol">The destination parameter collection which will receive the
+contents of this parameter collection.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.DeepClone">
+            <summary>Performs a deep clone of the entire collection and clones
+(not just a reference copy) each individual parameter</summary>
+            <remarks>The cloned collection will be a complete clone that will be
+completely disassociated from the original. Any changes made to
+either collection will NOT be reflected in the
+other collection.</remarks>
+            <returns>The newly cloned collection</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.GetEnumerator">
+            <summary>Returns an enumerator for the entire collection</summary>
+            <remarks>    
+    This returns an enumerator of each parameter in the collection,
+    not the name/parameter pairs.
+    
+    
+    
+    
+    Enumerators only allow reading the data in the collection.
+    Enumerators cannot be used to modify the underlying collection.
+    
+    
+    
+    
+    Initially, the enumerator is positioned before the first
+    element in the collection. Reset also brings the enumerator
+    back to this position. At this position, calling Current throws
+    an exception. Therefore, you must call MoveNext to advance the
+    enumerator to the first element of the collection before
+    reading the value of Current.
+    
+    
+    Current returns the same object until either MoveNext or Reset
+    is called. MoveNext sets Current to the next element.
+    
+    
+    
+    
+    After the end of the collection is passed, the enumerator is
+    positioned after the last element in the collection, and
+    calling MoveNext returns false. If the last call to MoveNext
+    returned false, calling Current throws an exception. To set
+    Current to the first element of the collection again, you can
+    call Reset followed by MoveNext.
+    
+    
+    An enumerator remains valid as long as the collection remains
+    unchanged. If changes are made to the collection, such as
+    adding, modifying or deleting elements, the enumerator is
+    irrecoverably invalidated and the next call to MoveNext or
+    Reset throws an InvalidOperationException. If the collection is
+    modified between MoveNext and Current, Current will return the
+    element that it is set to, even if the enumerator is already
+    invalidated.
+    
+    
+    
+    
+    The enumerator does not have exclusive access to the
+    collection; therefore, enumerating through a collection is
+    intrinsically not a thread-safe procedure. Even when a
+    collection is synchronized, other threads could still modify
+    the collection, which causes the enumerator to throw an
+    exception. To guarantee thread safety during enumeration, you
+    can either lock the collection during the entire enumeration or
+    catch the exceptions resulting from changes made by other
+    threads.
+    </remarks>
+            <returns>An
+
+IEnumerator for the collection</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.IndexOf(System.Object)">
+            <summary>Returns the index at which this object exists in the
+collection.</summary>
+            <remarks>    
+    The DataParameterCollection is searched forward starting at the
+    first element and ending at the last element.
+    
+    
+    This method performs a linear search; therefore, the average
+    execution time is proportional to Count. That is, this method
+    is an O(n) operation, where n is Count.
+    
+    
+    
+    
+    This method determines equality by calling
+    
+        Object.Equals.
+    </remarks>
+            <returns>The zero-based index of the first occurrence of value within
+the entire DataParameterCollection, if found; otherwise, -1.</returns>
+            <param name="value">The
+
+IDbDataParameter whose index to retrieve.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.Insert(System.Int32,System.Object)">
+            <summary>Inserts the parameter at the specified index in the
+collection.</summary>
+            <remarks>    
+    All parameters with higher indexes then this parameter will be
+    shifted down one in index to accomodates the new parameter.
+    
+    
+    Only instances of
+    
+        IDbDataParameter can be added to this collection.
+    </remarks>
+            <param name="index">The index at which to insert the parameter</param>
+            <param name="value">The
+
+IDbDataParameter to insert into the collection</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.Remove">
+            <summary>Removes a parameter from the collection.</summary>
+            <remarks>The name parameter is the natural
+name of the parameter. That is, the unaltered non-provider-specific
+name. For example, it would be the "name" value, not the "@name"
+value (for MS SQL Server) or ":name" (for Oracle).</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.Remove(System.Data.IDbDataParameter)">
+            <summary>Removes a parameter from the collection.</summary>
+            <remarks>    
+    If the parameter passed in is null or does not already exist in
+    the collection, nothing will happen and no error will be
+    thrown. Otherwise, the parameter will be removed from the
+    collection.
+    </remarks>
+            <param name="param">The parameter to remove from the collection.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.Remove(System.Object)">
+            <summary>Removes a parameter from the collection.</summary>
+            <remarks>If the parameter passed in is not an
+
+IDbDataParameter, is null (Nothing in Visual
+Basic), or does not already exist in the collection, nothing will
+happen and no error will be thrown. Otherwise, the parameter will
+be removed from the collection.</remarks>
+            <param name="value">he parameter to remove from the collection.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.Remove(System.String)">
+            <summary>Removes a parameter with the specified name from the
+collection.</summary>
+            <remarks>The name parameter is the natural
+name of the parameter. That is, the unaltered non-provider-specific
+name. For example, it would be the "name" value, not the "@name"
+value (for MS SQL Server) or ":name" (for Oracle).</remarks>
+            <param name="name">The natural name of the parameter to remove from the
+collection.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataParameterCollection.RemoveAt(System.Int32)">
+            <summary>Removes the parameter at the specified index from the
+collection.</summary>
+            <remarks>All parameters with higher indexes then this parameter will
+be shifted down one in index to fill the gap.</remarks>
+            <param name="index">The index of the parameter to remove.</param>
+        </member>
+        <member name="P:FChoice.Common.Data.DataParameterCollection.Count">
+            <summary>Retrieves the number of parameters actually contained in the
+DataParameterCollection.</summary>
+            <remarks>The number of parameters actually contained in the
+DataParameterCollection.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.DataParameterCollection.IsFixedSize">
+            <summary>Retrieves a value indicating whether or not this collection
+has a fixed size.</summary>
+            <remarks>This value is always false since DataParameterCollection does
+not support being fixed in size.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.DataParameterCollection.IsReadOnly">
+            <summary>Retrieves a value indicating whether this collection is
+read-only.</summary>
+            <remarks>This property always returns false since read-only
+DataParameterCollections are not supported.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.DataParameterCollection.IsSynchronized">
+            <summary>Retrieves a value indicating whether access to the
+DataParameterCollection is synchronized (thread-safe).</summary>
+            <remarks>False. This collection is always non-synchronized.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.DataParameterCollection.Item">
+            <summary>Gets or sets the
+
+IDbDataParameter associated with the specific name or index in
+the collection.</summary>
+        </member>
+        <member name="P:FChoice.Common.Data.DataParameterCollection.Item(System.Int32)">
+            <summary>Gets or sets the
+
+IDbDataParameter associated with index in the
+collection.</summary>
+            <param name="index">The zero-based index of the element to get or set.</param>
+        </member>
+        <member name="P:FChoice.Common.Data.DataParameterCollection.Item(System.String)">
+            <summary>Gets or sets the
+
+IDbDataParameter associated with the specific name in the
+collection.</summary>
+            <remarks>The name argument is the natural
+name of the parameter. That is, it does not have any data
+provider-specific prefixes such as "@" for Microsoft SQL Server, or
+":" for Oracle.</remarks>
+            <param name="name">The name of the parameter whose value to get or set.</param>
+        </member>
+        <member name="P:FChoice.Common.Data.DataParameterCollection.Parameters">
+            <summary>Retrieves a collection of the
+
+IDbDataParameter objects in this collection.</summary>
+            <remarks>This property retrieves a collection of just the parameters,
+not the names.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.DataParameterCollection.SyncRoot">
+            <summary>Gets an object that can be used to synchronize access to this
+instance of the DataParameterCollection.</summary>
+            <remarks>    Enumerating through a collection is intrinsically not a
+    thread-safe procedure. Even when a collection is synchronized,
+    other threads could still modify the collection, which causes
+    the enumerator to throw an exception. To guarantee thread
+    safety during enumeration, you can either lock the collection
+    during the entire enumeration or catch the exceptions resulting
+    from changes made by other threads.
+    
+    Lock on SyncRoot before enumerating through this collection to
+    ensure thread safety.
+    </remarks>
+        </member>
+        <member name="T:FChoice.Common.Data.DataSetSurrogate">
+            <summary>    Reads or writes a DataSet as a compact binary
+    stream.</summary>
+            <remarks>IMPORTANT: The
+
+ReadBinary and
+
+WriteBinary methods only support simple DataSets with tables,
+columns, rows (with data) and relationships. All other information
+will be lost. This includes keys, constraints, extended properties,
+etc.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DataSetSurrogate.ReadBinary(System.IO.Stream)">
+            <summary>Reads a
+
+DataSet from a binary stream</summary>
+            <remarks>    The binary stream must have been written using the
+    
+    WriteBinary method as it uses a specific binary encoding
+    scheme.
+    
+    WriteBinary encodes the version of
+    
+    DataSetSurrogate that was used to produce the stream so as
+    to avoid version and binary format conflicts with newer or
+    older versions. If
+    
+    ReadBinary encounters a newer or older stream, it will
+    return null (Nothing in Visual Basic)
+    signifying that the cache data is no longer valid and needs to
+    be refreshed. 
+    
+        
+            
+                IMPORTANT: The
+                
+                ReadBinary and
+                
+                WriteBinary methods only support simple
+                DataSets with tables, columns, rows (with data) and
+                relationships. All other information will be lost.
+                This includes keys, constraints, extended
+                properties, etc
+            
+        
+    </remarks>
+            <returns>A populated
+
+DataSet, or null (Nothing in Visual Basic) if
+the stream was invalid or written using an older version of
+DataSetSurrogate</returns>
+            <param name="str">The stream from which to read the
+
+DataSet</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DataSetSurrogate.WriteBinary(System.Data.DataSet,System.IO.Stream)">
+            <summary>Writes a
+
+DataSet to a binary stream</summary>
+            <remarks>    
+    
+    WriteBinary writes the
+    
+    DataSet using a specific binary encoding scheme which can
+    only be read by
+    
+    ReadBinary.
+    
+    
+    WriteBinary encodes the version of
+    
+    DataSetSurrogate that was used to produce the stream so as
+    to avoid version and binary format conflicts with newer or
+    older versions. If
+    
+    ReadBinary encounters a newer or older stream, it will
+    return null signifying that the cache data is no longer valid
+    and needs to be refreshed.
+    IMPORTANT: The
+    
+    ReadBinary and
+    
+    WriteBinary methods only support simple DataSets with
+    tables, columns, rows (with data) and relationships. All other
+    information will be lost. This includes keys, constraints,
+    extended properties, etc</remarks>
+            <param name="ds">The
+
+DataSet to write to the stream</param>
+            <param name="str">The stream which will receive the binary from the
+
+DataSet</param>
+        </member>
+        <member name="T:FChoice.Common.Data.DbProvider">
+            <summary>Abstract base class for database providers used by
+SqlHelper
+and applications.</summary>
+            <remarks>    Inherit from this class to provide custom database access
+    to an unsupported database type, or to replace the behavior of
+    a built-in/supported database type.
+    IMPORTANT: This abstract base class and
+    all intrinsic providers are thread safe. Custom provider
+    implementations should also be thread safe.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.ConstructConnectionString(System.Collections.Specialized.NameValueCollection)">
+            <summary>Constructs a valid ADO.NET-compliant connection string from
+the supplied key/value pairs.</summary>
+            <returns>A properly formatted ADO.NET-compliant connection
+string.</returns>
+            <param name="keyValues">The set of keys and values that will make up the connection
+string where key and value are: key=value;</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.CreateConnectionString(System.String,System.String,System.String,System.String,System.String)">
+            <summary>Creates a basic connection string from the basic common
+required elements according the rules of the specific database
+type</summary>
+            <returns>A properly formatted, ADO.NET-compliant connection
+string.</returns>
+            <remarks>NOTE: This method does not validate the
+format of the extraParams argument. If the the value of
+extraParams is invalid, the connection string may not work
+properly.</remarks>
+            <param name="dbServer">The hostname, IP, or unique identifier name for the database
+(i.e. host name for MSSQL or SID for Oracle)</param>
+            <param name="dbName">The catalog or database name for the database (for MSSQL and
+Sybase, not required for Oracle-based providers)</param>
+            <param name="dbUser">The user name for database authentication</param>
+            <param name="dbPass">The password for the user for database authentication</param>
+            <param name="extraParams">Additional key/value pairs separated by a semi-colon
+(;).</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.CreateParameter(System.String,System.Object)">
+            <summary>Creates a new IDbDataParameter of the specific underlying
+type for this database provider type (i.e. SqlHelper for MSSQL,
+etc)</summary>
+            <returns>An IDbDataParameter instance which can be added to a
+parameter collection for a query</returns>
+            <remarks>See
+
+DataParameterCollection for more information on how to use data
+parameters.</remarks>
+            <param name="name">The name of the parameter to add (without the
+database-specific bind variable prefix such as @ for Microsoft SQL
+Server or : for Oracle)</param>
+            <param name="value">The value of the parameter that will be passed to the
+database as part of the query</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.FormatDateLiteral(System.DateTime)">
+            <summary>Converts a DateTime value to a string according to the
+specific format of the underlying database type</summary>
+            <returns>A literal string that is compatible with the underlying
+database.</returns>
+            <remarks>The resultant string can be used directly in a SQL statement.
+For example, the date will be formatted as 'yyyy-MM-dd
+HH:mm:ss.fff' for MSSQL or a TO_DATE(yourdate, 'yyyy-mm-dd
+hh24:mi:ss') function call will be returned for Oracle.</remarks>
+            <param name="value">The DateTime value to convert</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetAdapter">
+            <summary>Gets a database type-specific DbDataAdapter instance for this
+provider type (i.e. SqlDataAdapter for MSSQL)</summary>
+            <returns>A database type-specific DbDataAdapter instance for this
+provider type (i.e. SqlDataAdapter for MSSQL)</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetAdapter">
+            <summary>Gets a database type-specific DbDataAdapter instance for this
+provider type (i.e. SqlDataAdapter for MSSQL) without any options
+set yet.</summary>
+            <returns>A DbDataAdapter instance for this provider type (i.e.
+SqlDataAdapter for MSSQL)</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetAdapter(System.Data.IDbConnection)">
+            <summary>Gets a database type-specific DbDataAdapter instance for this
+provider type (i.e. SqlDataAdapter for MSSQL) initialized to use
+the specified connection to the database.</summary>
+            <returns>A DbDataAdapter instance for this provider type (i.e.
+SqlDataAdapter for MSSQL), initialized to use the specified
+connection</returns>
+            <param name="conn">The database connection this adapter should use when
+performing database operations</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetAdapter(System.Data.IDbConnection,System.String)">
+            <summary>Gets a database type-specific DbDataAdapter instance for this
+provider type (i.e. SqlDataAdapter for MSSQL) initialized to use
+the specified connection to the database and the specified SQL
+statement to execute.</summary>
+            <returns>A DbDataAdapter instance for this provider type (i.e.
+SqlDataAdapter for MSSQL), initialized to use the specified
+connection and SELECT SQL statement</returns>
+            <param name="conn">The database connection this adapter should use when
+performing database operations</param>
+            <param name="sqlStmt">The SQL statement to use as the SELECT command for this
+adapter</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetAsStatement(System.String)">
+            <summary>Qualifies a column or table alias according to this
+provider's database type's rules regarding use of the AS
+keyword</summary>
+            <returns>A string with or without the "AS" keyword as necessary for
+the underlying database type</returns>
+            <remarks>In MSSQL, the "AS" keyword is not always required, but can
+help to resolve ambiguity in SQL statements and is recommended.
+Oracle 8i and earlier do not support the use of the "AS" keyword.
+This method helps statement writers use column and table aliases
+without having to worry about underlying support for "AS".</remarks>
+            <param name="name">The name of the column or table alias</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetBitwiseAndStatement(System.Object,System.Object)">
+            <summary>Formats a bitwise AND statement according to the language
+features of the underlying database type</summary>
+            <returns>A properly formatted bitwise AND equation that will be
+recognized by the underlying database type.</returns>
+            <remarks>MSSQL and Oracle 9 and later recognize the standard C-style
+bitwise AND statement syntax (x &amp; y). However, Oracle 8i and
+earlier required the use of the bitand() function to evaluate
+bitwise AND statements. This method helps SQL statement writers use
+AND syntax in their queries without concerns of the differences in
+database types.</remarks>
+            <param name="operand1">The first operand in a bitwise AND equation (the 'x'
+in the statement 'x &amp; y')</param>
+            <param name="operand2">The second operand in a bitwise AND equation (the
+'y' in the statement 'x &amp; y')</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetConnection">
+            <summary>Gets an
+
+IDbConnection object instance of the correct type for the
+underlying database (i.e.
+
+SqlConnection for MSSQL) that is prepared to connect to the
+specified database.</summary>
+            <returns>An
+
+IDbConnection object instance of the correct type for the
+underlying database (i.e.
+
+SqlConnection for MSSQL).</returns>
+            <remarks>The connection instance is not open by default. In order to
+open the connection, use the
+
+Open method on the
+
+IDbConnection reference returned by this method.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetConnection">
+            <summary>Gets an
+
+IDbConnection object instance of the correct type for the
+underlying database (i.e.
+
+SqlConnection for MSSQL) that is prepared to connect to the
+specified database using the default connection string specified in
+the application configuration file.</summary>
+            <returns>An
+
+IDbConnection object instance of the correct type for the
+underlying database (i.e.
+
+SqlConnection for MSSQL).</returns>
+            <remarks>The connection instance is not open by default. In order to
+open the connection, use the
+
+Open method on the
+
+IDbConnection reference returned by this method.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetConnection(System.String)">
+            <summary>Gets an
+
+IDbConnection object instance of the correct type for the
+underlying database (i.e.
+
+SqlConnection for MSSQL) that is prepared to connect to the
+specified database using the specified connection string.</summary>
+            <remarks>    The connection instance is not open by default. In order
+    to open the connection, use the
+    
+    Open method on the
+    
+    IDbConnection reference returned by this method.
+    To generate connection strings in a database-agnostic
+    fashion, please see the
+    
+    ConstructConnectionString and the
+    
+    CreateConnectionString methods.</remarks>
+            <returns>An
+
+IDbConnection object instance of the correct type for the
+underlying database (i.e.
+
+SqlConnection for MSSQL).</returns>
+            <param name="conStr">A full connection string that is compatible with the
+underlying database type. See the remarks for information on how to
+generate safe connection strings.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetDateStatement">
+            <summary>Gets a SQL statement fragment for the database-specific
+syntax of retrieving the current date (i.e. SYSDATE on Oracle or
+GETDATE() on MSSQL).</summary>
+            <returns>A SQL statement fragment for the database-specific syntax of
+retrieving the current date</returns>
+            <remarks>The returned string is a fragment of a statement, not an
+entire statement. It cannot be executed independently</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetDBDate">
+            <summary>Executes a statement against the database to retrieve the
+current date/time on the database</summary>
+            <returns>The current date and time on the database server</returns>
+            <remarks>The date and time returned by this method will be in the
+database's time zone. If the application is configured for a
+different time zone, conversion must be done manually. For
+information on performing time zone conversions using
+FCFL.NET, please see the following methods on the
+FCSession
+class:
+
+ChangeDate,
+
+ConvertFromLocalToServerDate, and
+
+ConvertFromServerToLocalDate.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetDbVersion">
+            <summary>Executes a statement against the database to retrieve the
+database software's version number</summary>
+            <returns>A Version object which represents the Major, Minor, Build,
+and Revision number of the database software's version
+number.</returns>
+            <remarks>NOTE: Oracle databases use a five-digit
+version numbering scheme. The .NET Version object only supports a
+four-digit numbering scheme. In most Oracle database versions, the
+fifth digit is zero. However, in the cases where it is not, the
+fifth digit will be dropped.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetExtension(System.String)">
+            <summary>Retrieves a specific
+IDbExtension
+instance configured for this provider</summary>
+            <returns>An
+IDbExtension
+instance, or $$NULL$$ if no extension exists with that
+name/key</returns>
+            <param name="extensionName">The name or key of the extension as configured in the
+application configuration file</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.GetParameterNamePrefix">
+            <summary>Gets the prefix used by the underlying database type for
+parameters in a parameterized query</summary>
+            <returns>The prefix used by the underlying database type for
+parameters in a parameterized query (i.e. "@" for MSSQL) or
+
+String.Empty for providers which do not use prefixes or
+parameter names</returns>
+            <remarks>Some database and/or provider types do not use prefixes for
+parameters, or do not use parameter names at all. One example of
+this is the OleDb provider uses "?" for all parameters instead of a
+prefix + name. In this case,
+
+String.Empty will be returned.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.ParseConnectionString(System.String)">
+            <summary>Parses a connection string into name-value pairs</summary>
+            <returns>A
+
+NameValueCollection of the name-value pairs contained in the
+connection string</returns>
+            <remarks>A trailing semi-colon is not required. For more information
+about the format of the connection string and possible parameters,
+please see the
+
+SqlConnection.ConnectionString property documentation. Oracle
+and other connection strings follow the same general rules and
+expose most of the same parameters as a
+
+SqlConnection connection string.</remarks>
+            <param name="connectStr">A valid ADO.NET connection string to parse (in the format of
+name=value;name2=value2;)</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.PrepareParameter(System.Data.IDbDataParameter,System.Data.CommandType)">
+            <summary>Prepares a parameter for the specified type of query
+according to the rules of the underlying database type</summary>
+            <remarks>Different database types and even different query types
+within the same database type have different requirements for how
+parameters must be named or formatted. This method allows the
+specific DbProvider to prepare the parameter as appropriate.</remarks>
+            <param name="param">The parameter to prepare for the query</param>
+            <param name="cmdType">The type of query being performed</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.PrepareSQLStatement(System.String,System.Data.CommandType,FChoice.Common.Data.DataParameterCollection)">
+            <summary>Prepares and formats a SQL statement according to the rules
+of the underlying database type</summary>
+            <returns>A formatted and prepared string, ready to be executed against
+the database</returns>
+            <remarks>    This method will replace special tokens with statements
+    or parameter names according to the type of query and
+    parameters passed in. For example, the {DATE} token
+    will be replaced with the database type's special date
+    statement (as returned by the
+    
+    GetDateStatement Method). Parameters are specified using
+    the {n} syntax where n is an ascending
+    number. The number of {n} parameters must match the
+    number of parameters specified in the commandParams
+    argument.
+    For example, the string:
+    SELECT {DATE} AS CurDate FROM
+    some_table WHERE name = {0} AND id = {1}
+    with the parameters named "nameVal" and "idVal" will be
+    formatted as such with an MSSQL provider:
+    SELECT GETDATE() AS CurDate FROM
+    some_table WHERE name = @nameVal AND id = @idVal
+    This statement can then be executed against the database
+    using an ADO.NET
+    
+    IDbCommand instance, or the
+    SqlHelper
+    class.
+    NOTE:
+    SqlHelper
+    will automatically call this method during Execute* methods
+    like
+    
+    ExecuteNonQuery or
+    
+    ExecuteDataSet. Generally, this method should not be called
+    directly, only through
+    SqlHelper.</remarks>
+            <param name="sqlStmt">The statement to prepare and format</param>
+            <param name="cmdType">The type of query being executed</param>
+            <param name="commandParams">Parameters for the parameterized query or stored
+procedure</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.RemoveParameterNamePrefix(System.String)">
+            <summary>Removes, if necessary, the parameter name prefix on a given
+parameter name</summary>
+            <returns>The parameter name without any name prefix</returns>
+            <param name="name">The parameter name with an optional parameter name
+prefix</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.TestConnection">
+            <summary>Executes a test to connect to the database using the default
+connection string</summary>
+            <returns>True if the test was successful, False otherwise</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProvider.ValidateConnectionParams(System.String,System.String,System.String,System.String)">
+            <summary>Validates the supplied connection parameters against the
+rules of the underlying provider</summary>
+            <returns>True if the parameters are valid according to the provider,
+or False if they are not</returns>
+            <param name="dbServer">The host name, IP address, or Oracle SID of the database
+server</param>
+            <param name="dbName">The catalog or database to use (not required for
+Oracle)</param>
+            <param name="dbUser">The user or login name to use for authentication</param>
+            <param name="dbPass">The password to use for authentication</param>
+        </member>
+        <member name="P:FChoice.Common.Data.DbProvider.CanBatchQueries">
+            <summary>Specifies whether the underlying database type for this
+provider can support multiple SQL statements per database
+round-trip</summary>
+            <remarks>This value is normally the natural value according to the
+provider, but can be overridden by using the "fchoice.enablebatch"
+(or
+
+ConfigValues.ENABLE_BATCH Field) configuration
+parameter.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.DbProvider.ConnectionString">
+            <summary>Gets or sets the connection string this provider will use for
+database connections</summary>
+            <remarks>This value is normally the value specified in the application
+configuration file. However, it can be set to another connection
+string at which point the provider will use the newly specified
+value.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.DbProvider.MaxInListItems">
+            <summary>Gets the maximum number of items the underlying database type
+supports in an IN() or NOT IN() SQL clause</summary>
+        </member>
+        <member name="P:FChoice.Common.Data.DbProvider.ProviderName">
+            <summary>A general provider type or key to classify this
+provider</summary>
+            <remarks>This value may be different than the key specified in the
+application configuration file. For example, the ODP.NET provider
+for Oracle can use the key "ODPNET", however, its provider name is
+equivalent to the
+
+DbProviderFactory.ORACLE_PROVIDER_NAME Constant value. This is
+so that providers can be put into general types or categorizations
+which makes it easier for application developers to formulate
+proper SQL statements for that database type.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.DbProvider.RequiresDbNameParameter">
+            <summary>Gets whether or not this provider requires the "dbname"
+argument for the
+
+CreateConnectionString Method</summary>
+            <remarks>This property is helpful for application developers writing
+utilities and user interfaces for collecting database connection
+information from a user in a database-agnostic way. This allows
+programmatic control on whether a "DB Name:" field should be
+displayed or not.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.DbProvider.TypeMapper">
+            <summary>This property is intended for future use and is not currently
+used.</summary>
+            <remarks>This property is intended for future use and is not currently
+used.</remarks>
+        </member>
+        <member name="T:FChoice.Common.Data.DbProviderFactory">
+            <summary>Provides a way of customized data access using
+DbProvider
+objects that abstract database access</summary>
+            <remarks>    For more information on customizing the data providers
+    that DbProviderFactory can produce, please see the guide to
+    Configuring Custom
+    Data Providers.
+    For more information on creating a custom data provider,
+    see the
+    DbProvider
+    Class documentation.
+    This class and all its methods and properties are thread
+    safe.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProviderFactory.CreateProvider">
+            <summary>Creates a new instance of a
+DbProvider
+object from the default or specified provider alias</summary>
+            <returns>A
+DbProvider
+instance for the given or default alias</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProviderFactory.CreateProvider">
+            <summary>Creates a new instance of a
+DbProvider
+object from the default configured provider</summary>
+            <returns>A new
+DbProvider
+instance for the configured default alias</returns>
+            <remarks>It is not necessary to create a new instance of the default
+DbProvider
+every time it is used. Instead, see the
+
+Provider property to get a reference to the common instance of
+the default
+DbProvider.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProviderFactory.CreateProvider(System.String)">
+            <summary>Creates a new instance of a
+DbProvider
+object from the specified provider alias</summary>
+            <returns>A new
+DbProvider
+instance configured for the given alias</returns>
+            <remarks>The three intrinsic aliases are the values for the three
+constants:
+
+DbProviderFactory.MSSQL_PROVIDER_NAME,
+
+DbProviderFactory.ORACLE_PROVIDER_NAME, and
+
+DbProviderFactory.SYBASE_PROVIDER_NAME. To configure additional
+aliases, please see the guide to
+Configure Custom Data
+Providers.</remarks>
+            <param name="providerAlias">A provider alias that matches one of the intrinsic provider
+aliases, one configured in the application configuration file, or
+$$NULL$$ for the default alias</param>
+        </member>
+        <member name="M:FChoice.Common.Data.DbProviderFactory.IsValidProvider(System.String)">
+            <summary>Gets whether or not the specified alias or name is a valid
+alias/name for a configured or intrinsic data access
+provider</summary>
+            <returns>Whether or not the specified alias or name is a valid
+alias/name for a configured or intrinsic data access
+provider</returns>
+            <remarks>For more information on specifying custom data providers, see
+the guide on Configuring
+Custom Data Providers.</remarks>
+            <param name="providerName">The provider name or alias to verify</param>
+        </member>
+        <member name="P:FChoice.Common.Data.DbProviderFactory.Provider">
+            <summary>Gets a reference to the default configured
+DbProvider
+instance</summary>
+            <remarks>While the CreateProvider Method will return a new default
+provider instance, it creates a new one every time. It is more
+efficient to use the primary default provider instance.
+DbProvider
+implementations are required to be thread safe, so it is OK to use
+a single instance in this fashion.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.DbProviderFactory.ProviderNames">
+            <summary>Gets the list of available provider names/alias that can be
+used for displaying to the user or as an argument for the
+
+CreateProvider method.</summary>
+            <remarks>Both intrinsic and configured provider names are included in
+this array. For more information on configuring custom data
+providers, see the guide to
+Configuring Custom Data
+Providers.</remarks>
+        </member>
+        <member name="F:FChoice.Common.Data.DbProviderFactory.CONFIGURATION_SECTION_NAME">
+            <summary>The name of the configuration section that DbProviderFactory
+expects in the application configuration file</summary>
+            <remarks>The value of this constant is "dataAccess". For more
+information on using the configuration section and configuring
+custom data providers, please see the guide to
+Configuring Custom Data
+Providers.</remarks>
+        </member>
+        <member name="F:FChoice.Common.Data.DbProviderFactory.MSSQL_PROVIDER_NAME">
+            <summary>The default provider name of MSSQL-based data
+providers</summary>
+            <remarks>Please see remarks section of the
+
+DbProvider.ProviderName property documentation for more
+information on the significance of this value.</remarks>
+        </member>
+        <member name="F:FChoice.Common.Data.DbProviderFactory.ORACLE_PROVIDER_NAME">
+            <summary>The default provider name of Oracle-based data
+providers</summary>
+            <remarks>Please see remarks section of the
+
+DbProvider.ProviderName property documentation for more
+information on the significance of this value.</remarks>
+        </member>
+        <member name="F:FChoice.Common.Data.DbProviderFactory.SYBASE_PROVIDER_NAME">
+            <summary>The default provider name of Sybase-based data
+providers</summary>
+            <remarks>Please see remarks section of the
+
+DbProvider.ProviderName property documentation for more
+information on the significance of this value.</remarks>
+        </member>
+        <member name="T:FChoice.Common.Data.FCTypes">
+            <summary>This class is not currently used and is intended for future
+products.</summary>
+        </member>
+        <member name="T:FChoice.Common.Data.OleDbDataProviderBase">
+            <summary>Abstract base class for OleDb-based custom data
+providers</summary>
+            <remarks>Inherit from this class to implement a custom data provider
+based on the OleDb client in ADO.NET.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.CreateConnectionString(System.String,System.String,System.String,System.String,System.String)">
+            <summary>    Creates a basic connection string from the basic common
+    required elements according the rules of the specific database
+    type</summary>
+            <returns>A properly formatted, ADO.NET-compliant connection
+string.</returns>
+            <remarks>NOTE: This method does not validate the
+format of the extraParams argument. If the the value of
+extraParams is invalid, the connection string may not work
+properly.</remarks>
+            <param name="dbServer">    The hostname, IP, or unique identifier name for the
+    database (i.e. host name for MSSQL or SID for Oracle)</param>
+            <param name="dbName">    The catalog or database name for the database (for MSSQL
+    and Sybase, not required for Oracle-based providers)</param>
+            <param name="dbUser">The user name for database authentication</param>
+            <param name="dbPass">    The password for the user for database
+    authentication</param>
+            <param name="extraParams">    Additional key/value pairs separated by a semi-colon
+    (;).</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.CreateParameter(System.String,System.Object)">
+            <summary>    Creates a new IDbDataParameter of the specific underlying
+    type for this database provider type (i.e. SqlHelper for MSSQL,
+    etc)</summary>
+            <returns>An IDbDataParameter instance which can be added to a
+parameter collection for a query</returns>
+            <remarks>See
+
+DataParameterCollection for more information on how to use data
+parameters.</remarks>
+            <param name="name">    The name of the parameter to add (without the
+    database-specific bind variable prefix such as @ for Microsoft
+    SQL Server or : for Oracle)</param>
+            <param name="value">    The value of the parameter that will be passed to the
+    database as part of the query</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.GetAdapter">
+            <summary>    Gets a database type-specific DbDataAdapter instance for
+    this provider type (i.e. SqlDataAdapter for MSSQL)</summary>
+            <returns>A database type-specific DbDataAdapter instance for this
+provider type (i.e. SqlDataAdapter for MSSQL)</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.GetAdapter">
+            <summary>    Gets a database type-specific DbDataAdapter instance for
+    this provider type (i.e. SqlDataAdapter for MSSQL) without any
+    options set yet.</summary>
+            <returns>A DbDataAdapter instance for this provider type (i.e.
+SqlDataAdapter for MSSQL)</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.GetAdapter(System.Data.IDbConnection)">
+            <summary>    Gets a database type-specific DbDataAdapter instance for
+    this provider type (i.e. SqlDataAdapter for MSSQL) initialized
+    to use the specified connection to the database.</summary>
+            <returns>A DbDataAdapter instance for this provider type (i.e.
+SqlDataAdapter for MSSQL), initialized to use the specified
+connection</returns>
+            <param name="conn">    The database connection this adapter should use when
+    performing database operations</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.GetAdapter(System.Data.IDbConnection,System.String)">
+            <summary>    Gets a database type-specific DbDataAdapter instance for
+    this provider type (i.e. SqlDataAdapter for MSSQL) initialized
+    to use the specified connection to the database and the
+    specified SQL statement to execute.</summary>
+            <returns>A DbDataAdapter instance for this provider type (i.e.
+SqlDataAdapter for MSSQL), initialized to use the specified
+connection and SELECT SQL statement</returns>
+            <param name="conn">    The database connection this adapter should use when
+    performing database operations</param>
+            <param name="sqlStmt">    The SQL statement to use as the SELECT command for this
+    adapter</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.GetBitwiseAndStatement(System.Object,System.Object)">
+            <summary>    Formats a bitwise AND statement according to the language
+    features of the underlying database type</summary>
+            <returns>A properly formatted bitwise AND equation that will be
+recognized by the underlying database type.</returns>
+            <remarks>MSSQL and Oracle 9 and later recognize the standard C-style
+bitwise AND statement syntax (x &amp; y). However, Oracle 8i and
+earlier required the use of the bitand() function to evaluate
+bitwise AND statements. This method helps SQL statement writers use
+AND syntax in their queries without concerns of the differences in
+database types.</remarks>
+            <param name="operand1">    The first operand in a bitwise AND equation (the
+    'x' in the statement 'x &amp; y')</param>
+            <param name="operand2">    The second operand in a bitwise AND equation (the
+    'y' in the statement 'x &amp; y')</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.GetConnection">
+            <summary>    Gets an
+    
+    IDbConnection object instance of the correct type for the
+    underlying database (i.e.
+    
+    SqlConnection for MSSQL) that is prepared to connect to the
+    specified database.</summary>
+            <returns>An
+
+IDbConnection object instance of the correct type for the
+underlying database (i.e.
+
+SqlConnection for MSSQL).</returns>
+            <remarks>The connection instance is not open by default. In order to
+open the connection, use the
+
+Open method on the
+
+IDbConnection reference returned by this method.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.GetConnection">
+            <summary>    Gets an
+    
+    IDbConnection object instance of the correct type for the
+    underlying database (i.e.
+    
+    SqlConnection for MSSQL) that is prepared to connect to the
+    specified database using the default connection string
+    specified in the application configuration file.</summary>
+            <returns>An
+
+IDbConnection object instance of the correct type for the
+underlying database (i.e.
+
+SqlConnection for MSSQL).</returns>
+            <remarks>The connection instance is not open by default. In order to
+open the connection, use the
+
+Open method on the
+
+IDbConnection reference returned by this method.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.GetConnection(System.String)">
+            <summary>    Gets an
+    
+    IDbConnection object instance of the correct type for the
+    underlying database (i.e.
+    
+    SqlConnection for MSSQL) that is prepared to connect to the
+    specified database using the specified connection
+    string.</summary>
+            <remarks>    The connection instance is not open by default. In order
+    to open the connection, use the
+    
+    Open method on the
+    
+    IDbConnection reference returned by this method.
+    To generate connection strings in a database-agnostic
+    fashion, please see the
+    
+    ConstructConnectionString and the
+    
+    CreateConnectionString methods.</remarks>
+            <returns>An
+
+IDbConnection object instance of the correct type for the
+underlying database (i.e.
+
+SqlConnection for MSSQL).</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.GetParameterNamePrefix">
+            <summary>    Gets the prefix used by the underlying database type for
+    parameters in a parameterized query</summary>
+            <returns>The prefix used by the underlying database type for
+parameters in a parameterized query (i.e. "@" for MSSQL) or
+
+String.Empty for providers which do not use prefixes or
+parameter names</returns>
+            <remarks>Some database and/or provider types do not use prefixes for
+parameters, or do not use parameter names at all. One example of
+this is the OleDb provider uses "?" for all parameters instead of a
+prefix + name. In this case,
+
+String.Empty will be returned.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.PrepareSQLStatement(System.String,System.Data.CommandType,FChoice.Common.Data.DataParameterCollection)">
+            <summary>    Prepares and formats a SQL statement according to the
+    rules of the underlying database type</summary>
+            <returns>A formatted and prepared string, ready to be executed against
+the database</returns>
+            <remarks>    This method will replace special tokens with statements
+    or parameter names according to the type of query and
+    parameters passed in. For example, the {DATE} token
+    will be replaced with the database type's special date
+    statement (as returned by the
+    
+    GetDateStatement Method). Parameters are specified using
+    the {n} syntax where n is an ascending
+    number. The number of {n} parameters must match the
+    number of parameters specified in the commandParams
+    argument.
+    For example, the string:
+    SELECT {DATE} AS CurDate FROM
+    some_table WHERE name = {0} AND id = {1}
+    with the parameters named "nameVal" and "idVal" will be
+    formatted as such with an MSSQL provider:
+    SELECT GETDATE() AS CurDate FROM
+    some_table WHERE name = @nameVal AND id = @idVal
+    This statement can then be executed against the database
+    using an ADO.NET
+    
+    IDbCommand instance, or the
+    SqlHelper
+    class.
+    NOTE:
+    SqlHelper
+    will automatically call this method during Execute* methods
+    like
+    
+    ExecuteNonQuery or
+    
+    ExecuteDataSet. Generally, this method should not be called
+    directly, only through
+    SqlHelper.</remarks>
+            <param name="sqlStmt">The statement to prepare and format</param>
+            <param name="cmdType">The type of query being executed</param>
+            <param name="commandParams">    Parameters for the parameterized query or stored
+    procedure</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.RemoveParameterNamePrefix(System.String)">
+            <summary>    Removes, if necessary, the parameter name prefix on a
+    given parameter name</summary>
+            <returns>The parameter name without any name prefix</returns>
+            <param name="name">    The parameter name with an optional parameter name
+    prefix</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OleDbDataProviderBase.ValidateConnectionParams(System.String,System.String,System.String,System.String)">
+            <summary>    Validates the supplied connection parameters against the
+    rules of the underlying provider</summary>
+            <returns>True if the parameters are valid according to the provider,
+or False if they are not</returns>
+            <param name="dbServer">    The host name, IP address, or Oracle SID of the database
+    server</param>
+            <param name="dbName">    The catalog or database to use (not required for
+    Oracle)</param>
+            <param name="dbUser">The user or login name to use for authentication</param>
+            <param name="dbPass">The password to use for authentication</param>
+        </member>
+        <member name="T:FChoice.Common.Data.OracleProviderBase">
+            <summary>Abstract base class for Oracle-based custom data
+providers</summary>
+            <remarks>Inherit from this class to implement a custom data provider
+based on the OracleClient in ADO.NET or other Oracle ADO.NET
+implementations (such as Oracle's ODP.NET).</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.CreateConnectionString(System.String,System.String,System.String,System.String,System.String)">
+            <summary>    Creates a basic connection string from the basic common
+    required elements according the rules of the specific database
+    type</summary>
+            <returns>A properly formatted, ADO.NET-compliant connection
+string.</returns>
+            <remarks>NOTE: This method does not validate the
+format of the extraParams argument. If the the value of
+extraParams is invalid, the connection string may not work
+properly.</remarks>
+            <param name="dbServer">    The hostname, IP, or unique identifier name for the
+    database (i.e. host name for MSSQL or SID for Oracle)</param>
+            <param name="dbName">    The catalog or database name for the database (for MSSQL
+    and Sybase, not required for Oracle-based providers)</param>
+            <param name="dbUser">The user name for database authentication</param>
+            <param name="dbPass">    The password for the user for database
+    authentication</param>
+            <param name="extraParams">    Additional key/value pairs separated by a semi-colon
+    (;).</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.CreateParameter(System.String,System.Object)">
+            <summary>    Creates a new IDbDataParameter of the specific underlying
+    type for this database provider type (i.e. SqlHelper for MSSQL,
+    etc)</summary>
+            <returns>An IDbDataParameter instance which can be added to a
+parameter collection for a query</returns>
+            <remarks>See
+
+DataParameterCollection for more information on how to use data
+parameters.</remarks>
+            <param name="name">    The name of the parameter to add (without the
+    database-specific bind variable prefix such as @ for Microsoft
+    SQL Server or : for Oracle)</param>
+            <param name="value">    The value of the parameter that will be passed to the
+    database as part of the query</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.FormatDateLiteral(System.DateTime)">
+            <summary>    Converts a DateTime value to a string according to the
+    specific format of the underlying database type</summary>
+            <returns>A literal string that is compatible with the underlying
+database.</returns>
+            <remarks>The resultant string can be used directly in a SQL statement.
+For example, the date will be formatted as 'yyyy-MM-dd
+HH:mm:ss.fff' for MSSQL or a TO_DATE(yourdate, 'yyyy-mm-dd
+hh24:mi:ss') function call will be returned for Oracle.</remarks>
+            <param name="value">The DateTime value to convert</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetAdapter">
+            <summary>    Gets a database type-specific DbDataAdapter instance for
+    this provider type (i.e. SqlDataAdapter for MSSQL)</summary>
+            <returns>A database type-specific DbDataAdapter instance for this
+provider type (i.e. SqlDataAdapter for MSSQL)</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetAdapter">
+            <summary>    Gets a database type-specific DbDataAdapter instance for
+    this provider type (i.e. SqlDataAdapter for MSSQL) without any
+    options set yet.</summary>
+            <returns>A DbDataAdapter instance for this provider type (i.e.
+SqlDataAdapter for MSSQL)</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetAdapter(System.Data.IDbConnection)">
+            <summary>    Gets a database type-specific DbDataAdapter instance for
+    this provider type (i.e. SqlDataAdapter for MSSQL) initialized
+    to use the specified connection to the database.</summary>
+            <returns>A DbDataAdapter instance for this provider type (i.e.
+SqlDataAdapter for MSSQL), initialized to use the specified
+connection</returns>
+            <param name="conn">    The database connection this adapter should use when
+    performing database operations</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetAdapter(System.Data.IDbConnection,System.String)">
+            <summary>    Gets a database type-specific DbDataAdapter instance for
+    this provider type (i.e. SqlDataAdapter for MSSQL) initialized
+    to use the specified connection to the database and the
+    specified SQL statement to execute.</summary>
+            <returns>A DbDataAdapter instance for this provider type (i.e.
+SqlDataAdapter for MSSQL), initialized to use the specified
+connection and SELECT SQL statement</returns>
+            <param name="conn">    The database connection this adapter should use when
+    performing database operations</param>
+            <param name="sqlStmt">    The SQL statement to use as the SELECT command for this
+    adapter</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetAsStatement(System.String)">
+            <summary>    Qualifies a column or table alias according to this
+    provider's database type's rules regarding use of the AS
+    keyword</summary>
+            <returns>A string with or without the "AS" keyword as necessary for
+the underlying database type</returns>
+            <remarks>In MSSQL, the "AS" keyword is not always required, but can
+help to resolve ambiguity in SQL statements and is recommended.
+Oracle 8i and earlier do not support the use of the "AS" keyword.
+This method helps statement writers use column and table aliases
+without having to worry about underlying support for "AS".</remarks>
+            <param name="name">The name of the column or table alias</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetBitwiseAndStatement(System.Object,System.Object)">
+            <summary>    Formats a bitwise AND statement according to the language
+    features of the underlying database type</summary>
+            <returns>A properly formatted bitwise AND equation that will be
+recognized by the underlying database type.</returns>
+            <remarks>MSSQL and Oracle 9 and later recognize the standard C-style
+bitwise AND statement syntax (x &amp; y). However, Oracle 8i and
+earlier required the use of the bitand() function to evaluate
+bitwise AND statements. This method helps SQL statement writers use
+AND syntax in their queries without concerns of the differences in
+database types.</remarks>
+            <param name="operand1">    The first operand in a bitwise AND equation (the
+    'x' in the statement 'x &amp; y')</param>
+            <param name="operand2">    The second operand in a bitwise AND equation (the
+    'y' in the statement 'x &amp; y')</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetConnection">
+            <summary>    Gets an
+    
+    IDbConnection object instance of the correct type for the
+    underlying database (i.e.
+    
+    SqlConnection for MSSQL) that is prepared to connect to the
+    specified database.</summary>
+            <returns>An
+
+IDbConnection object instance of the correct type for the
+underlying database (i.e.
+
+SqlConnection for MSSQL).</returns>
+            <remarks>The connection instance is not open by default. In order to
+open the connection, use the
+
+Open method on the
+
+IDbConnection reference returned by this method.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetConnection">
+            <summary>    Gets an
+    
+    IDbConnection object instance of the correct type for the
+    underlying database (i.e.
+    
+    SqlConnection for MSSQL) that is prepared to connect to the
+    specified database using the default connection string
+    specified in the application configuration file.</summary>
+            <returns>An
+
+IDbConnection object instance of the correct type for the
+underlying database (i.e.
+
+SqlConnection for MSSQL).</returns>
+            <remarks>The connection instance is not open by default. In order to
+open the connection, use the
+
+Open method on the
+
+IDbConnection reference returned by this method.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetConnection(System.String)">
+            <summary>    Gets an
+    
+    IDbConnection object instance of the correct type for the
+    underlying database (i.e.
+    
+    SqlConnection for MSSQL) that is prepared to connect to the
+    specified database using the specified connection
+    string.</summary>
+            <remarks>    The connection instance is not open by default. In order
+    to open the connection, use the
+    
+    Open method on the
+    
+    IDbConnection reference returned by this method.
+    To generate connection strings in a database-agnostic
+    fashion, please see the
+    
+    ConstructConnectionString and the
+    
+    CreateConnectionString methods.</remarks>
+            <returns>An
+
+IDbConnection object instance of the correct type for the
+underlying database (i.e.
+
+SqlConnection for MSSQL).</returns>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetDateStatement">
+            <summary>    Gets a SQL statement fragment for the database-specific
+    syntax of retrieving the current date (i.e. SYSDATE on Oracle
+    or GETDATE() on MSSQL).</summary>
+            <returns>A SQL statement fragment for the database-specific syntax of
+retrieving the current date</returns>
+            <remarks>The returned string is a fragment of a statement, not an
+entire statement. It cannot be executed independently</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetDBDate">
+            <summary>    Executes a statement against the database to retrieve the
+    current date/time on the database</summary>
+            <returns>The current date and time on the database server</returns>
+            <remarks>The date and time returned by this method will be in the
+database's time zone. If the application is configured for a
+different time zone, conversion must be done manually. For
+information on performing time zone conversions using
+FCFL.NET, please see the following methods on the
+FCSession
+class:
+
+ChangeDate,
+
+ConvertFromLocalToServerDate, and
+
+ConvertFromServerToLocalDate.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetNlsFormat(FChoice.Common.Data.OracleProviderBase)">
+            <summary>Executes a query to retrieve the database user's configured
+NLS format</summary>
+            <returns>The NLS format string</returns>
+            <param name="provider">An instance of an OracleProviderBase implementation that will
+be used for connecting to the database and retrieving the NLS
+format.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.GetParameterNamePrefix">
+            <summary>    Gets the prefix used by the underlying database type for
+    parameters in a parameterized query</summary>
+            <returns>The prefix used by the underlying database type for
+parameters in a parameterized query (i.e. "@" for MSSQL) or
+
+String.Empty for providers which do not use prefixes or
+parameter names</returns>
+            <remarks>Some database and/or provider types do not use prefixes for
+parameters, or do not use parameter names at all. One example of
+this is the OleDb provider uses "?" for all parameters instead of a
+prefix + name. In this case,
+
+String.Empty will be returned.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.PrepareParameter(System.Data.IDbDataParameter,System.Data.CommandType)">
+            <summary>    Prepares a parameter for the specified type of query
+    according to the rules of the underlying database type</summary>
+            <remarks>Different database types and even different query types
+within the same database type have different requirements for how
+parameters must be named or formatted. This method allows the
+specific DbProvider to prepare the parameter as appropriate.</remarks>
+            <param name="param">The parameter to prepare for the query</param>
+            <param name="cmdType">The type of query being performed</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.PrepareSQLStatement(System.String,System.Data.CommandType,FChoice.Common.Data.DataParameterCollection)">
+            <summary>    Prepares and formats a SQL statement according to the
+    rules of the underlying database type</summary>
+            <returns>A formatted and prepared string, ready to be executed against
+the database</returns>
+            <remarks>    This method will replace special tokens with statements
+    or parameter names according to the type of query and
+    parameters passed in. For example, the {DATE} token
+    will be replaced with the database type's special date
+    statement (as returned by the
+    
+    GetDateStatement Method). Parameters are specified using
+    the {n} syntax where n is an ascending
+    number. The number of {n} parameters must match the
+    number of parameters specified in the commandParams
+    argument.
+    For example, the string:
+    SELECT {DATE} AS CurDate FROM
+    some_table WHERE name = {0} AND id = {1}
+    with the parameters named "nameVal" and "idVal" will be
+    formatted as such with an MSSQL provider:
+    SELECT GETDATE() AS CurDate FROM
+    some_table WHERE name = @nameVal AND id = @idVal
+    This statement can then be executed against the database
+    using an ADO.NET
+    
+    IDbCommand instance, or the
+    SqlHelper
+    class.
+    NOTE:
+    SqlHelper
+    will automatically call this method during Execute* methods
+    like
+    
+    ExecuteNonQuery or
+    
+    ExecuteDataSet. Generally, this method should not be called
+    directly, only through
+    SqlHelper.</remarks>
+            <param name="sqlStmt">The statement to prepare and format</param>
+            <param name="cmdType">The type of query being executed</param>
+            <param name="commandParams">    Parameters for the parameterized query or stored
+    procedure</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.RemoveParameterNamePrefix(System.String)">
+            <summary>    Removes, if necessary, the parameter name prefix on a
+    given parameter name</summary>
+            <returns>The parameter name without any name prefix</returns>
+            <param name="name">    The parameter name with an optional parameter name
+    prefix</param>
+        </member>
+        <member name="M:FChoice.Common.Data.OracleProviderBase.ValidateConnectionParams(System.String,System.String,System.String,System.String)">
+            <summary>    Validates the supplied connection parameters against the
+    rules of the underlying provider</summary>
+            <returns>True if the parameters are valid according to the provider,
+or False if they are not</returns>
+            <param name="dbServer">    The host name, IP address, or Oracle SID of the database
+    server</param>
+            <param name="dbName">    The catalog or database to use (not required for
+    Oracle)</param>
+            <param name="dbUser">The user or login name to use for authentication</param>
+            <param name="dbPass">The password to use for authentication</param>
+        </member>
+        <member name="P:FChoice.Common.Data.OracleProviderBase.MaxInListItems">
+            <summary>    Gets the maximum number of items the underlying database
+    type supports in an IN() or NOT IN() SQL clause</summary>
+        </member>
+        <member name="P:FChoice.Common.Data.OracleProviderBase.ProviderName">
+            <summary>    A general provider type or key to classify this
+    provider</summary>
+            <remarks>This value may be different than the key specified in the
+application configuration file. For example, the ODP.NET provider
+for Oracle can use the key "ODPNET", however, its provider name is
+equivalent to the
+
+DbProviderFactory.ORACLE_PROVIDER_NAME Constant value. This is
+so that providers can be put into general types or categorizations
+which makes it easier for application developers to formulate
+proper SQL statements for that database type.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.OracleProviderBase.RequiresDbNameParameter">
+            <summary>    Gets whether or not this provider requires the "dbname"
+    argument for the
+    
+    CreateConnectionString Method</summary>
+            <remarks>This property is helpful for application developers writing
+utilities and user interfaces for collecting database connection
+information from a user in a database-agnostic way. This allows
+programmatic control on whether a "DB Name:" field should be
+displayed or not.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.OracleProviderBase.TypeMapper">
+            <summary>    This property is intended for future use and is not
+    currently used.</summary>
+            <remarks>This property is intended for future use and is not currently
+used.</remarks>
+        </member>
+        <member name="T:FChoice.Common.Data.SqlHelper">
+            <summary>Provides a convenience and data provider-agnostic wrapper
+around ADO.NET</summary>
+            <remarks>    SqlHelper can be used either as an instance or
+    statically.
+    When used statically, SqlHelper is thread safe.
+    Concurrent threads can call the same method at the same time
+    and will experience no ill-effect.
+    When used as an instance, however, SqlHelper is
+    NOT thread safe. Multiple threads should not
+    use the same instance of SqlHelper.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper._ctor">
+            <summary>Creates a new instance of SqlHelper with optional
+initialization parameters</summary>
+            <remarks>All of the optional arguments passed into the constructor can
+be changed later using the similarly named properties on the
+SqlHelper instance. These constructor overloads are provided simply
+for convenience.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper._ctor">
+            <summary>Creates a new instance of SqlHelper using the default
+DbProvider
+instance</summary>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper._ctor(System.Data.CommandType,System.String)">
+            <summary>Creates a new instance of SqlHelper with the specified
+   
+CommandType and command text (SQL statement)</summary>
+            <remarks>When the inCmdType parameter is set to
+StoredProcedure, set the cmdText parameter to the
+name of the stored procedure. The user may be required to use
+escape character syntax if the stored procedure name contains any
+special characters. The command will call this stored procedure
+when you call one of the Execute methods.</remarks>
+            <param name="inCmdType">The
+
+CommandType this instance of SqlHelper should use when
+executing the cmdTxt statement.</param>
+            <param name="cmdTxt">The text command to execute. The default value is an empty
+string ("").</param>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper._ctor(FChoice.Common.Data.DbProvider)">
+            <summary>Creates a new instance of SqlHelper with the specified
+   DbProvider
+   instance</summary>
+            <param name="dataProvider">The specific
+DbProvider
+instance that this instance of SqlHelper should use when performing
+database operations</param>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper._ctor(FChoice.Common.Data.DbProvider,System.Data.CommandType,System.String)">
+            <summary>Creates a new instance of SqlHelper with the specified
+   DbProvider
+   instance,
+   
+CommandType and command text (SQL statement)</summary>
+            <remarks>When the inCmdType parameter is set to
+StoredProcedure, set the cmdTxt parameter to the
+name of the stored procedure. The user may be required to use
+escape character syntax if the stored procedure name contains any
+special characters. The command will call this stored procedure
+when you call one of the Execute methods.</remarks>
+            <param name="dataProvider">The specific
+DbProvider
+instance that this instance of SqlHelper should use when performing
+database operations</param>
+            <param name="inCmdType">The
+
+CommandType this instance of SqlHelper should use when
+executing the cmdTxt statement.</param>
+            <param name="cmdTxt">The text command to execute. The default value is an empty
+string ("").</param>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper._ctor(FChoice.Common.Data.DbProvider,System.String)">
+            <summary>Creates a new instance of SqlHelper using the specified
+   DbProvider
+   instance and command text (SQL statement) and the
+   
+CommandType set to Text</summary>
+            <param name="dataProvider">The specific
+DbProvider
+instance that this instance of SqlHelper should use when performing
+database operations</param>
+            <param name="cmdTxt">The text command to execute. The default value is an empty
+string ("").</param>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper._ctor(System.String)">
+            <summary>Creates a new instance of SqlHelper using the specified
+command text (SQL statement) with the
+
+CommandType set to Text</summary>
+            <param name="cmdTxt">The text command to execute. The default value is an empty
+string ("").</param>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper.ExecuteDataSet">
+            <summary>Executes the the specified SQL against the database using the
+specified
+DbProvider
+and returns the results as a
+
+DataSet</summary>
+            <returns>A
+
+DataSet with zero or more
+
+DataTable objects each containing zero or more rows.</returns>
+            <remarks>    Not all providers return a DataSet with the same
+    structure if no results are returned by the query. Some
+    providers return an empty DataSet. Some providers return a
+    DataSet with a single DataTable which contains zero rows. Test
+    for tables and rows using the Count property on the DataSet and
+    any DataTables before assuming any Tables or Rows exist.
+    In no case will the DataSet returned be $$NULL$$.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper.ExecuteDataSet">
+            <summary>Executes the the SQL specified in the
+
+CommandText Property against the database using the provider
+specified in the
+
+DataProvider Property and returns the results as a
+
+DataSet</summary>
+            <returns>A
+
+DataSet with zero or more
+
+DataTable objects each containing zero or more rows.</returns>
+            <remarks>    Not all providers return a DataSet with the same
+    structure if no results are returned by the query. Some
+    providers return an empty DataSet. Some providers return a
+    DataSet with a single DataTable which contains zero rows. Test
+    for tables and rows using the Count property on the DataSet and
+    any DataTables before assuming any Tables or Rows exist.
+    In no case will the DataSet returned be $$NULL$$.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper.ExecuteDataSet(System.Data.CommandType,System.String)">
+            <summary>Executes the the specified SQL against the database using the
+default
+DbProvider
+and returns the results as a
+
+DataSet</summary>
+            <remarks>    Not all providers return a DataSet with the same
+    structure if no results are returned by the query. Some
+    providers return an empty DataSet. Some providers return a
+    DataSet with a single DataTable which contains zero rows. Test
+    for tables and rows using the Count property on the DataSet and
+    any DataTables before assuming any Tables or Rows exist.
+    In no case will the DataSet returned be $$NULL$$.
+    When the commandType parameter is set to
+    StoredProcedure, set the commandText parameter
+    to the name of the stored procedure. The user may be required
+    to use escape character syntax if the stored procedure name
+    contains any special characters. The command will call this
+    stored procedure when you call one of the Execute
+    methods.</remarks>
+            <returns>A
+
+DataSet with zero or more
+
+DataTable objects each containing zero or more rows.</returns>
+            <param name="commandType">    The
+    
+    CommandType to use when executing the commandText
+    statement.</param>
+            <param name="commandText">The text command to execute. The default value is an empty
+string ("").</param>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper.ExecuteDataSet(System.Data.CommandType,System.String,FChoice.Common.Data.DataParameterCollection)">
+            <summary>Executes the the specified parameterized SQL command with the
+specified parameters against the database using the default
+DbProvider
+and returns the results as a
+
+DataSet</summary>
+            <remarks>    The parameters in the commandParams parameter
+    must be in the same ordinal number as the parameters specified
+    in the commandText parameter. For example, if the
+    "nameVal" parameter is to replace the {0} parameter in
+    the commandText, it must be the first (zero position)
+    parameter in the commandParams collection.
+    Not all providers return a DataSet with the same
+    structure if no results are returned by the query. Some
+    providers return an empty DataSet. Some providers return a
+    DataSet with a single DataTable which contains zero rows. Test
+    for tables and rows using the Count property on the DataSet and
+    any DataTables before assuming any Tables or Rows exist.
+    In no case will the DataSet returned be $$NULL$$.
+    When the commandType parameter is set to
+    StoredProcedure, set the commandText parameter
+    to the name of the stored procedure. The user may be required
+    to use escape character syntax if the stored procedure name
+    contains any special characters. The command will call this
+    stored procedure when you call one of the Execute
+    methods.</remarks>
+            <returns>A
+
+DataSet with zero or more
+
+DataTable objects each containing zero or more rows.</returns>
+            <param name="commandType">The
+
+CommandType to use when executing the commandText
+statement.</param>
+            <param name="commandText">The text command to execute. The default value is an empty
+string ("").</param>
+            <param name="commandParams">A collection of parameters to use as replacements for the
+parameterized sections of the commandText</param>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper.ExecuteDataSet(System.Data.IDbConnection,System.Data.CommandType,System.String)">
+            <summary>Executes the the specified SQL using the provided database
+connection and returns the results as a
+
+DataSet</summary>
+            <remarks>    The connection parameter is not required to be
+    an open connection. If it is not open when passed to this
+    method, it will be opened and will be closed when the method is
+    finished. If it is passed in open, or live, it will remain open
+    when this method completes.
+    Not all providers return a DataSet with the same
+    structure if no results are returned by the query. Some
+    providers return an empty DataSet. Some providers return a
+    DataSet with a single DataTable which contains zero rows. Test
+    for tables and rows using the Count property on the DataSet and
+    any DataTables before assuming any Tables or Rows exist.
+    In no case will the DataSet returned be $$NULL$$.
+    When the commandType parameter is set to
+    StoredProcedure, set the commandText parameter
+    to the name of the stored procedure. The user may be required
+    to use escape character syntax if the stored procedure name
+    contains any special characters. The command will call this
+    stored procedure when you call one of the Execute
+    methods.</remarks>
+            <returns>A
+
+DataSet with zero or more
+
+DataTable objects each containing zero or more rows.</returns>
+            <param name="connection">A configured connection to the database</param>
+            <param name="commandType">The
+
+CommandType to use when executing the commandText
+statement.</param>
+            <param name="commandText">The text command to execute. The default value is an empty
+string ("").</param>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper.ExecuteDataSet(System.Data.IDbConnection,System.Data.CommandType,System.String,FChoice.Common.Data.DataParameterCollection)">
+            <summary>Executes the the specified parameterized SQL with the
+specified parameters using the provided database connection and
+returns the results as a
+
+DataSet</summary>
+            <remarks>    The connection parameter is not required to be
+    an open connection. If it is not open when passed to this
+    method, it will be opened and will be closed when the method is
+    finished. If it is passed in open, or live, it will remain open
+    when this method completes.
+    The parameters in the commandParams parameter
+    must be in the same ordinal number as the parameters specified
+    in the commandText parameter. For example, if the
+    "nameVal" parameter is to replace the {0} parameter in
+    the commandText, it must be the first (zero position)
+    parameter in the commandParams collection.
+    Not all providers return a DataSet with the same
+    structure if no results are returned by the query. Some
+    providers return an empty DataSet. Some providers return a
+    DataSet with a single DataTable which contains zero rows. Test
+    for tables and rows using the Count property on the DataSet and
+    any DataTables before assuming any Tables or Rows exist.
+    In no case will the DataSet returned be $$NULL$$.
+    When the commandType parameter is set to
+    StoredProcedure, set the commandText parameter
+    to the name of the stored procedure. The user may be required
+    to use escape character syntax if the stored procedure name
+    contains any special characters. The command will call this
+    stored procedure when you call one of the Execute
+    methods.</remarks>
+            <returns>A
+
+DataSet with zero or more
+
+DataTable objects each containing zero or more rows.</returns>
+            <param name="connection">A configured connection to the database</param>
+            <param name="commandType">The
+
+CommandType to use when executing the commandText
+statement.</param>
+            <param name="commandText">The text command to execute. The default value is an empty
+string ("").</param>
+            <param name="commandParams">A collection of parameters to use as replacements for the
+parameterized sections of the commandText</param>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper.ExecuteDataSet(System.Data.IDbTransaction,System.Data.CommandType,System.String)">
+            <summary>Executes the the specified SQL using the provided database
+transaction and returns the results as a
+
+DataSet</summary>
+            <remarks>    The transaction parameter must be an open and
+    live transaction. After the call to this method, the
+    transaction will remain live and open.
+    Not all providers return a DataSet with the same
+    structure if no results are returned by the query. Some
+    providers return an empty DataSet. Some providers return a
+    DataSet with a single DataTable which contains zero rows. Test
+    for tables and rows using the Count property on the DataSet and
+    any DataTables before assuming any Tables or Rows exist.
+    In no case will the DataSet returned be $$NULL$$.
+    When the commandType parameter is set to
+    StoredProcedure, set the commandText parameter
+    to the name of the stored procedure. The user may be required
+    to use escape character syntax if the stored procedure name
+    contains any special characters. The command will call this
+    stored procedure when you call one of the Execute
+    methods.</remarks>
+            <returns>A
+
+DataSet with zero or more
+
+DataTable objects each containing zero or more rows.</returns>
+            <param name="transaction">A live transaction connected to the database</param>
+            <param name="commandType">The
+
+CommandType to use when executing the commandText
+statement.</param>
+            <param name="commandText">The text command to execute. The default value is an empty
+string ("").</param>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper.ExecuteDataSet(System.Data.IDbTransaction,System.Data.CommandType,System.String,FChoice.Common.Data.DataParameterCollection)">
+            <summary>Executes the the specified SQL with the specified parameters
+using the provided database transaction and returns the results as
+a
+
+DataSet</summary>
+            <remarks>    The transaction parameter must be an open and
+    live transaction. After the call to this method, the
+    transaction will remain live and open.
+    The parameters in the commandParams parameter
+    must be in the same ordinal number as the parameters specified
+    in the commandText parameter. For example, if the
+    "nameVal" parameter is to replace the {0} parameter in
+    the commandText, it must be the first (zero position)
+    parameter in the commandParams collection.
+    Not all providers return a DataSet with the same
+    structure if no results are returned by the query. Some
+    providers return an empty DataSet. Some providers return a
+    DataSet with a single DataTable which contains zero rows. Test
+    for tables and rows using the Count property on the DataSet and
+    any DataTables before assuming any Tables or Rows exist.
+    In no case will the DataSet returned be $$NULL$$.
+    When the commandType parameter is set to
+    StoredProcedure, set the commandText parameter
+    to the name of the stored procedure. The user may be required
+    to use escape character syntax if the stored procedure name
+    contains any special characters. The command will call this
+    stored procedure when you call one of the Execute
+    methods.</remarks>
+            <returns>A
+
+DataSet with zero or more
+
+DataTable objects each containing zero or more rows.</returns>
+            <param name="transaction">A live transaction connected to the database</param>
+            <param name="commandType">The
+
+CommandType to use when executing the commandText
+statement.</param>
+            <param name="commandText">The text command to execute. The default value is an empty
+string ("").</param>
+            <param name="commandParams">A collection of parameters to use as replacements for the
+parameterized sections of the commandText</param>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper.ExecuteDataSet(System.String)">
+            <summary>Executes the the specified SQL using the default
+DbProvider
+and returns the results as a
+
+DataSet</summary>
+            <remarks>    Not all providers return a DataSet with the same
+    structure if no results are returned by the query. Some
+    providers return an empty DataSet. Some providers return a
+    DataSet with a single DataTable which contains zero rows. Test
+    for tables and rows using the Count property on the DataSet and
+    any DataTables before assuming any Tables or Rows exist.
+    In no case will the DataSet returned be $$NULL$$.</remarks>
+            <returns>A
+
+DataSet with zero or more
+
+DataTable objects each containing zero or more rows.</returns>
+            <param name="commandText">The text command to execute. The default value is an empty
+string ("").</param>
+        </member>
+        <member name="M:FChoice.Common.Data.SqlHelper.ExecuteDataSetInList(System.Object[],System.String)">
+            <summary>Executes a specially formatted SQL statement specified in the
+
+CommandText Property</summary>
+        </member>
+        <member name="P:FChoice.Common.Data.SqlHelper.CommandType">
+            <remarks>When the
+CommandType
+property is set to StoredProcedure, set the
+
+CommandText property to the name of the stored procedure. The
+user may be required to use escape character syntax if the stored
+procedure name contains any special characters. The command will
+call this stored procedure when you call one of the Execute
+methods.</remarks>
+        </member>
+        <member name="T:FChoice.Common.Data.TypeMapper">
+            <summary>This class is not currently used and is intended for future
+products.</summary>
+        </member>
+        <member name="T:FChoice.Common.Data.UpdateQueryBatch">
+            <summary>Helper class for grouping INSERT and UPDATE statements
+together into a single batch without concern for the underlying
+database type's support for statement batching</summary>
+            <remarks>Grouping a number of statements into a single batch can
+present a challenge if those statements are parameterized
+query/update/insert statements. This class helps keep the parameter
+names unique as well as abstracting the execution details of
+executing all the statements in a single transaction and single
+database round-trip. If the provider does not support statement
+batching, statements will be executed one-by-one.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.UpdateQueryBatch._ctor">
+            <summary>Creates a new instance of a query batch using the specified
+transaction and optional provider</summary>
+        </member>
+        <member name="M:FChoice.Common.Data.UpdateQueryBatch._ctor(System.Data.IDbTransaction)">
+            <summary>Creates a new instance of a query batch using the specified
+transaction and the default provider</summary>
+            <remarks>    The transaction must be open and ready against an open
+    database connection
+    IMPORTANT: The UpdateQueryBatch does not
+    commit or rollback the transaction instance. It is the
+    responsibility of the caller to ensure that the transaction is
+    properly set up and finished after the batch is
+    executed.</remarks>
+            <param name="trans">An open, live transaction in which this batch will
+participate</param>
+        </member>
+        <member name="M:FChoice.Common.Data.UpdateQueryBatch._ctor(System.Data.IDbTransaction,FChoice.Common.Data.DbProvider)">
+            <summary>Creates a new instance of a query batch using the specified
+transaction and a specific provider</summary>
+            <remarks>    The transaction must be open and ready against an open
+    database connection.
+    IMPORTANT: The UpdateQueryBatch does not
+    commit or rollback the transaction instance. It is the
+    responsibility of the caller to ensure that the transaction is
+    properly set up and finished after the batch is
+    executed.</remarks>
+            <param name="trans">An open, live transaction in which this batch will
+participate</param>
+            <param name="prov">The provider to use for any database-type-specific operations
+that UpdateQueryBatch may need to perform</param>
+        </member>
+        <member name="M:FChoice.Common.Data.UpdateQueryBatch.AddStatement(System.String,FChoice.Common.Data.DataParameterCollection)">
+            <summary>Adds an unprepared SQL statement (with the {n} and
+{DATE} parameters still present) to the list of statements
+to execute during the batch or executes it immediately if batching
+is not available or disabled</summary>
+            <remarks>    Once added, the statement is rewritten to make the
+    parameter names unique among all the statements. Once added a
+    statement cannot be removed. The entire batch must be discarded
+    and rebuilt.
+    If the specified provider for this batch returns false
+    from its
+    
+    CanBatchQueries property, the statement will be executed
+    immediately and not added to a batch. No statement will be
+    added to a "batch". Subsequent calls to the
+    
+    Execute Method will not perform any operations against the
+    database and return a -2 for number of rows affected.
+    If the specified provider returns true from its
+    
+    CanBatchQueries property, this statement will be added to
+    the list of statements to execute in the batch when the
+    
+    Execute Method is called.
+    IMPORTANT: The UpdateQueryBatch does not
+    commit or rollback the transaction instance. It is the
+    responsibility of the caller to ensure that the transaction is
+    properly set up and finished after the batch is
+    executed.</remarks>
+            <param name="sqlStmt">An unprepared SQL statement (with the {n} and
+{DATE} parameters still present)</param>
+            <param name="cmdParams">A collection of parameters to use with the supplied
+sqlStmt parameter. The number of parameters must match the
+number of {n} arguments in the SQL statement. Each
+parameter in the collection must have a unique name with respect to
+all the other parameters in all the other queries in this batch. To
+guarantee uniqueness among parameters, see the
+
+GetUniqueParamName Method.</param>
+        </member>
+        <member name="M:FChoice.Common.Data.UpdateQueryBatch.Execute">
+            <summary>Executes the batch if the provider supports statement
+batching, or nothing if it doesn't</summary>
+            <returns>The number of rows affected, if available, or -2 if no
+statements were executed</returns>
+            <remarks>    Not all providers support returning the number of rows
+    affected in all circumstances. Different providers return
+    different results in this case. Usually the number is -1 or 0.
+    Otherwise, the number should be a positive number indicating
+    the number of rows inserted and/or updated.
+    IMPORTANT: The UpdateQueryBatch does not
+    commit or rollback the transaction instance. It is the
+    responsibility of the caller to ensure that the transaction is
+    properly set up and finished after the batch is
+    executed.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Data.UpdateQueryBatch.GetUniqueParamName(System.String)">
+            <summary>Gets a unique parameter name among all the parameters for all
+the queries in this batch based off a suggested base name</summary>
+            <returns>The desired name with numbers appended as necessary to
+guarantee uniqueness</returns>
+            <param name="baseName">The desired name for the parameter</param>
+        </member>
+        <member name="P:FChoice.Common.Data.UpdateQueryBatch.CommandText">
+            <summary>Gets the current command text that will be executed when the
+
+Execute Method is called</summary>
+            <remarks>Calls to the
+
+AddStatement Method will modify the value of this property.
+Statements cannot be removed or changed once they are added. The
+batch must be discarded and rebuilt in order to change any of the
+statements.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.UpdateQueryBatch.Parameters">
+            <summary>Gets the collection of all parameters for all queries to be
+executed by this batch</summary>
+            <remarks>While the parameters in this collection can be manipulated,
+this could cause instability during the batching process and is not
+recommended.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.UpdateQueryBatch.Provider">
+            <summary>Gets the provider that this batch is using</summary>
+            <remarks>This value is read-only to prevent changing providers in the
+middle of a batch process. Note that the provider on the
+
+SqlHelper Property can be changed. This might have adverse
+effects on the batching process and is not recommended.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.UpdateQueryBatch.SqlHelper">
+            <summary>Gets the instance of a
+SqlHelper
+class that is used by this batch to manage parameters and execute
+statements</summary>
+            <remarks>While it is possible to change properties, add/remove
+parameters, and change providers and other properties on this
+instance, it could cause instability during the batching process
+and is not recommended.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Data.UpdateQueryBatch.Transaction">
+            <summary>Gets the transaction specified when this UpdateQueryBatch
+instance was created</summary>
+            <remarks>    IMPORTANT: The UpdateQueryBatch does not
+    commit or rollback the transaction instance. It is the
+    responsibility of the caller to ensure that the transaction is
+    properly set up and finished after the batch is
+    executed.</remarks>
+        </member>
+        <member name="N:FChoice.Common.Licensing">
+            <summary>First Choice Software Licensing</summary>
+            <remarks>This namespace is for First Choice Software use only. API
+stability is not guaranteed.</remarks>
+        </member>
+        <member name="T:FChoice.Common.Licensing.ILicenseTool">
+            <summary>Supports First Choice licensing.</summary>
+            <remarks>For internal First Choice use only.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Licensing.ILicenseTool.GraceEventInfo(System.String)">
+            <summary>Returns details of the current state of GraceEvents for a
+given license</summary>
+            <param name="licenseKey">Key that identifies a valid First Choice license.</param>
+        </member>
+        <member name="M:FChoice.Common.Licensing.ILicenseTool.LogGraceEvent(System.String)">
+            <summary>Logs the occurrence of a grace event.</summary>
+            <param name="licenseKey">Key that identifies a valid First Choice license.</param>
+        </member>
+        <member name="M:FChoice.Common.Licensing.ILicenseTool.ValidateLockdownData(System.String)">
+            <summary>Validates lock down data.</summary>
+            <returns>Returns true only if lock down data is valid.</returns>
+            <param name="lockdownData">Lock down data used for licensing.</param>
+        </member>
+        <member name="T:FChoice.Common.Licensing.LicenseCollection">
+            <summary>Collection of LicensesHolds a collection of valid
+licenses.</summary>
+        </member>
+        <member name="T:FChoice.Common.Licensing.LicenseInfo">
+            <summary>License Details</summary>
+        </member>
+        <member name="T:FChoice.Common.Licensing.LicenseManager">
+            <summary>Singleton providing access to the current collection of valid
+First Choice licenses</summary>
+            <remarks>    Please access the License Manager via the Instance
+    property.
+    If multiple licenses for the same product are present the
+    manager does its best to load the best license available (most
+    available users, longest time until key is expired.)
+    If you install new licenses you will need to
+    re-initialize your application to have the new licenses become
+    available.</remarks>
+        </member>
+        <member name="M:FChoice.Common.Licensing.LicenseManager.Initialize">
+            <summary>License Manager is initialized automatically during
+application initialization.</summary>
+        </member>
+        <member name="P:FChoice.Common.Licensing.LicenseManager.Instance">
+            <summary>Since this class is a
+Singleton you
+must use this property to call instance methods.</summary>
+            <remarks>Please use this property to access the Licenses
+property.</remarks>
+        </member>
+        <member name="P:FChoice.Common.Licensing.LicenseManager.IsInitialized">
+            <summary>True if the singleton has been initialized.</summary>
+        </member>
+        <member name="P:FChoice.Common.Licensing.LicenseManager.Licenses">
+            <summary>Collection of valid licenses available.</summary>
+        </member>
+    </members>
+</doc>
+

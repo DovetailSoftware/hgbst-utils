@@ -1,0 +1,25 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FChoice.DevTools.HgbstUtils.Core", "FChoice.DevTools.HgbstUtils.Core\FChoice.DevTools.HgbstUtils.Core.csproj", "{BC369F92-E6E4-4654-BB20-DA27E8FD883C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FChoice.DevTools.HgbstUtils.Text.UI", "FChoice.DevTools.HgbstUtils.Text.UI\FChoice.DevTools.HgbstUtils.Text.UI.csproj", "{4732420F-5B5C-449D-9864-C7B8DE0C6DBC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC369F92-E6E4-4654-BB20-DA27E8FD883C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC369F92-E6E4-4654-BB20-DA27E8FD883C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC369F92-E6E4-4654-BB20-DA27E8FD883C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC369F92-E6E4-4654-BB20-DA27E8FD883C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4732420F-5B5C-449D-9864-C7B8DE0C6DBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4732420F-5B5C-449D-9864-C7B8DE0C6DBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4732420F-5B5C-449D-9864-C7B8DE0C6DBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4732420F-5B5C-449D-9864-C7B8DE0C6DBC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
