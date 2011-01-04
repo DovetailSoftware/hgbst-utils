@@ -13,11 +13,8 @@ Software:
 	
 *   Clarify(tm) System Environment:
 	*    Clarify(tm) 7.0 or later 
-	*    Database:
-		Microsoft SQL Server 2000 SP3 or later
-			- OR – 
-		Oracle Database Server 7.2.3 or later ([1]) 
-	*    A user with the System Administrator role which DOES NOT have an encrypted/obfuscated password (i.e. the 'sa' user)
+	*    Database:	Microsoft SQL Server 2000 SP3 or later or Oracle Database Server 7.2.3 or later 
+	*    A user with the System Administrator role which **DOES NOT have an encrypted/obfuscated password** (i.e. the 'sa' user)
 
 ## Installing ##
 The distribution of HGBST Utilities you received should have contained
